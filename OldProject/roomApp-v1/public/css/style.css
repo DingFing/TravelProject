@@ -1,0 +1,151 @@
+*{
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+nav a {
+    text-decoration: underline;
+    color: blue;
+}
+
+nav a:hover {
+    color:red;
+}
+
+nav ul li{
+    display: inline-block;
+    margin: 0px 10px;
+}
+
+nav ul {
+    padding-left: 0px;
+}
+
+header figure, header h1{
+    display: inline-block
+}
+
+aside{
+    background-color: lightgrey;
+    padding: 3px;
+    margin: 3px;
+    border: 3px dashed;
+}
+
+h1 {
+    color: rgb(0, 0, 255);
+}
+
+h2 {
+    color:rgb(100, 100, 255);
+}
+
+header h1 {
+    vertical-align: top;
+    letter-spacing: 4px;
+    text-shadow:2px 2px 2px black;
+}
+
+section, article {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+fieldset{
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+fieldset legend{
+    font-style: italic;
+    font-size: smaller;
+    display: inline-block;
+    background-color: blue;
+    color: white;
+    box-shadow: 2px 2px 2px 1px grey;
+    border-radius: 4px;
+    border: 2px solid black;
+}
+
+input:required {
+    background-color: lightyellow;
+}
+
+input:required:valid {
+    border: 2px solid green;
+}
+
+input:required:invalid {
+    border: 1px solid red;
+}
+
+.startseite_Navigation{
+    border: 1px solid black;
+    font-size: 25px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    line-height: 240px;
+    background-color: orange;
+    display: inline-block;
+    height: 250px;
+    width: 250px;
+    margin: 0.2em;
+}
+
+.startseite_Navigation:hover{
+    box-shadow: 0px 0px 3px 3px grey;
+}
+
+a[href^="mailto"]::before {
+    content: url(../img/mail_icon.png);  
+}
+
+.requiredLabel::after {
+    content: " (erforderliche Eingabe)";
+}
+
+#buchungen tr:nth-child(even) {
+    background-color: rgb(202, 202, 202);
+}
+
+#buchungen thead{
+    background-color: rgb(116, 116, 116);
+}
+
+#buchungen {
+    border-collapse: collapse;
+}
+
+#buchungen td{
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+@media screen and (max-width: 768px){
+    figure#startseite + h1{
+        font-size: x-large;
+    }
+}
+
+@media screen and (max-width: 480px){
+    figure#startseite + h1{
+        display: none;
+    }
+}
