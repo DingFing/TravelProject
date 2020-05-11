@@ -1,2 +1,2 @@
 # TravelProject
-Ich bin eine Readme!
+Alles ist kacke hier.
