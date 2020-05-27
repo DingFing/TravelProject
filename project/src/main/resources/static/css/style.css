@@ -1,17 +1,33 @@
 *{
-    background-color: grey;
-    border: 1px solid red;
+    border: 1px solid black;
 }
 
 body{
     margin: 0px;
 }
 
-nav ol{
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    max-height: 50px;
+    background-color: grey;
+}
+
+header ol{
     display: none;
 }
 
-nav .menu-button{
-    flex-basis: auto;
-    flex-grow: 1;
+nav{
+    margin-top: 50px;
+}
+
+nav form{
+    margin: auto;
+}
+
+footer {
+    bottom: 0;
+    position: fixed;
 }

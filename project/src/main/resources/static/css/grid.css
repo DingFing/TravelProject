@@ -1,18 +1,14 @@
 .grid-container{
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-areas:
-        "header header header nav"
-        "main main main aside"
-        "footer footer footer footer";
-}
-
-header{
-    grid-area: header;
+        "nav nav nav nav"
+        "main main main aside";
+        overflow: hidden;
 }
 
 nav{
     grid-area: nav;
-    display: flex;
 }
 
 main{
@@ -21,8 +17,4 @@ main{
 
 aside{
     grid-area: aside;
-}
-
-footer{
-    grid-area: footer;
 }
