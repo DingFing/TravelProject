@@ -3,9 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>Home</title>
 </head>
-<body>
-    <p th:text="'Hello ' + ${name} + '!'" />
+<body class="grid-container">
+    <header>
+        <p th:text="'Hello ' + ${name} + '!'" /> 
+    </header>
+    <nav>
+        <button class="menu-button">
+            Button 1
+        </button>
+        <button class="menu-button">
+            Button 2
+        </button>
+        <ol class="menu-options">
+            <li class="menu-items">Option 1</li>
+            <li class="menu-items">Option 2</li>
+            <li class="menu-items">Option 3</li>
+        </ol>
+    </nav>
+    <main>
+        Main
+    </main>
+    <aside>
+        Aside
+    </aside>
+    <footer>
+        Footer
+    </footer>
 </body>
 </html>

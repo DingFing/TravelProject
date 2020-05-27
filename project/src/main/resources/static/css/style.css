@@ -1,0 +1,17 @@
+*{
+    background-color: grey;
+    border: 1px solid red;
+}
+
+body{
+    margin: 0px;
+}
+
+nav ol{
+    display: none;
+}
+
+nav .menu-button{
+    flex-basis: auto;
+    flex-grow: 1;
+}
