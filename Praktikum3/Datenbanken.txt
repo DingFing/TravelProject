@@ -4,6 +4,7 @@ CREATE TABLE Buchung(
     Bis Date NOT NULL
 )
 CREATE TABLE User(
+    Password VARCHAR(30) NOT NULL,
     GeburtsDat DATE NOT NULL,
     Vorname VARCHAR(20) NOT NULL,
     Nachname Nachname(20) NOT NULL,
