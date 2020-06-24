@@ -7,7 +7,7 @@ CREATE TABLE User(
     Password VARCHAR(30) NOT NULL,
     GeburtsDat DATE NOT NULL,
     Vorname VARCHAR(20) NOT NULL,
-    Nachname Nachname(20) NOT NULL,
+    Nachname VARCHAR(20) NOT NULL,
     KontoNr INT(10) UNSIGNED NOT NULL,
     UserNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY
 )
@@ -21,7 +21,7 @@ CREATE TABLE Aktivity(
     Kosten DOUBLE(10,2) NOT NULL, 
     ANr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Alternativ INT(10) REFERENCES Aktivity(ANr),
-    UnternehmenID(10) REFERENCES Unternehmen(UnternehmenID)
+    UnternehmenId INT(10) REFERENCES Unternehmen(UnternehmenID)
 )
 CREATE TABLE Urlaubsprofile(
     UserNr INT(10) REFERENCES User(UserNr),
@@ -30,19 +30,19 @@ CREATE TABLE Urlaubsprofile(
     Name VARCHAR(20) NOT NULL
 )
 CREATE TABLE Reise(
-    ReiseNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY
+    ReiseNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Beschreibung TEXT NOT NULL,
     Ort VARCHAR(20) NOT NULL,
     Region VARCHAR(20) NOT NULL,
     Land VARCHAR(20) NOT NULL,
     Preis DOUBLE(10,2) NOT NULL,
     Jahreszeit VARCHAR(10) NOT NULL,
-    UnternehmenID(10) REFERENCES Unternehmen(UnternehmenID)
+    UnternehmenID INT(10) REFERENCES Unternehmen(UnternehmenID)
 )
 CREATE TABLE BietetAn(
     ReiseNr INT(10) REFERENCES Reise(ReiseNr),
     ANr INT(10) REFERENCES Aktivity(ANr),
-    Anzahl INT(1) NOT NULL,
+    Anzahl INT(1) NOT NULL
 )
 CREATE TABLE Bewertung(
     UserNr INT(10) REFERENCES User(UserNr),
