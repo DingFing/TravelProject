@@ -1,4 +1,4 @@
-package com.travelproject.project;
+package com.travelproject.project.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
