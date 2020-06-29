@@ -5,7 +5,7 @@
     <title>Registrierung</title>
 </head>
 <body>
-    <form th:action="@{/save-user}" th:object="${user}" method="post">
+    <form th:action="@{/save-user}" th:object="${User}" method="post">
         <div>
             <label>Nachname</label>
             <input type="text" maxlength="20" size="20" th:field="*{Nachname}">
@@ -16,7 +16,7 @@
         </div>
         <div>
             <label>Geburtsdatum</label>
-            <input type="datetime-local" th:field="*{GeburtsDat}">
+            <input type="date" th:field="*{GeburtsDat}">
         </div>
         <div>
             <label>Passwort</label>
@@ -24,8 +24,9 @@
         </div>
         <div>
             <label>Kontonummer</label>
-            <input type="number" maxlength="10" size="10" th:field="*{KontoNr}">
+            <input type="text" maxlength="10" size="10" th:field="*{KontoNr}">
         </div>
+        <input type="submit">
     </form>
 </body>
 </html>

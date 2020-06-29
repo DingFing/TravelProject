@@ -24,6 +24,7 @@ public class HomeController {
         return "register";
     }
     // Register Test Output
+    @PostMapping("/save-user")
     public String outputData(@ModelAttribute User user){
         return "result";
     }

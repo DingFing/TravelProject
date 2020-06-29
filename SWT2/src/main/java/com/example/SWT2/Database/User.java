@@ -18,7 +18,7 @@ public class User {
     private String Vorname;
 
     @Column(name = "GeburtsDat" ,nullable = false)
-    private Date GeburtsDat;
+    private java.sql.Date GeburtsDat;
 
     @Column(name = "Password" ,length = 30, nullable = false)
     private String Password;
@@ -36,7 +36,7 @@ public class User {
 
     public String getUserNr(){ return this.Vorname; }
 
-    public void setGeburtsDat(Date GeburtsDat){this.GeburtsDat = GeburtsDat;}
+    public void setGeburtsDat(java.sql.Date GeburtsDat){this.GeburtsDat = GeburtsDat;}
     public Date getGeburtsDat(){ return this.GeburtsDat; }
 
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
