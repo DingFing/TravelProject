@@ -16,7 +16,6 @@ public class HomeController {
         model.addAttribute("name", name);
         return "home";
     }
-<<<<<<< HEAD
     // Register-Form
     @GetMapping("/register-form")
     public String createLoginForm(Model model) {
@@ -28,11 +27,4 @@ public class HomeController {
     public String outputData(@ModelAttribute User user){
         return "result";
     }
-=======
-    // Login
-    //@PostMapping("/login")
-    //public String login(){
-    //    return "home";
-    //}
->>>>>>> dba1f6b65ff02bc6810cfdb8ebcbc5c607e1c924
 }
