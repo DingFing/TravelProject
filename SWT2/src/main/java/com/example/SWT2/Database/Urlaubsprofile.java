@@ -10,10 +10,10 @@ public class Urlaubsprofile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ProfilNr" ,length = 10, nullable = false)
     private Integer ProfilNr;
-
+    @ManyToOne
     @JoinColumn(name="UserNr", nullable=false)
     private User UserNr;
-
+    @ManyToOne
     @JoinColumn(name="ReiseNr", nullable=false)
     private Reise ReiseNr;
 

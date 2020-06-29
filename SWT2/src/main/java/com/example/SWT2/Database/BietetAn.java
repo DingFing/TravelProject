@@ -9,10 +9,10 @@ public class BietetAn {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "BNr" ,length = 10, nullable = false)
     Integer BNr;
-
+    @ManyToOne
     @JoinColumn(name="ReiseNr", nullable=false)
     private Reise ReiseNr;
-
+    @ManyToOne
     @JoinColumn(name="ANr", nullable=false)
     private Aktivity ANr;
 

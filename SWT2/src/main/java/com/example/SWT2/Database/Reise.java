@@ -30,6 +30,7 @@ public class Reise {
     @Column(name= "Jahreszeit", length= 10, nullable= false)
     private String Jahreszeit;
 
+    @ManyToOne
     @JoinColumn(name="UnternehmenId", nullable=false)
     private Unternehmen UnternehmenId;
 
