@@ -42,6 +42,6 @@ public class User {
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
     public Integer getKontoNr(){ return this.KontoNr; }
 
-    public String setPassword(String Password){return this.Password;}
-    public void getPassword(){return this.Password}
+    public void setPassword(String Password){}
+    public String getPassword(){return this.Password;}
 }
