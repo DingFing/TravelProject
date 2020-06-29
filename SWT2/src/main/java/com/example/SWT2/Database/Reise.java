@@ -33,8 +33,8 @@ public class Reise {
     @JoinColumn(name="UnternehmenId", nullable=false)
     private Unternehmen UnternehmenId;
 
-    public Unternehmen getUnternehmenId(){return UnternehmenId}
-    public void setUnternehmenId(Unternehmen UnternehmenId){this.UnternehmenId= UnternehmenId}
+    public Unternehmen getUnternehmenId(){return UnternehmenId;}
+    public void setUnternehmenId(Unternehmen UnternehmenId){this.UnternehmenId= UnternehmenId;}
 
     public String getJahreszeit(){return Jahreszeit;}
     public void setJahreszeit(String Jahreszeit){this.Jahreszeit= Jahreszeit;}

@@ -17,5 +17,5 @@ public class Unternehmen {
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
 
     public Integer getUnternehmenId(){return UnternehmenId;}
-    public void setUnternehmenId(Integer UnternehmenId){this.UnternehmenId= UnternehmenId}
+    public void setUnternehmenId(Integer UnternehmenId){this.UnternehmenId= UnternehmenId;}
 }

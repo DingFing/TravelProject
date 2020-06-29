@@ -43,5 +43,5 @@ public class User {
     public Integer getKontoNr(){ return this.KontoNr; }
 
     public void setPassword(String Password){this.Password= Password;}
-    public String getPassword(){return this.Password}
+    public String getPassword(){return this.Password;}
 }

@@ -32,4 +32,7 @@ public class Bewertung {
 
     public User getUserNr(){return UserNr;}
     public void setANr(User UserNr){this.UserNr= UserNr;}
+
+    public String getBewertung(){return Bewertung;}
+    public void setBewertung(String Bewert){this.Bewertung = Bewert;}
 }

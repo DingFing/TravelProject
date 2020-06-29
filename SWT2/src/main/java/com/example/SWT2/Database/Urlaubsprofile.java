@@ -17,7 +17,7 @@ public class Urlaubsprofile {
     @JoinColumn(name="ReiseNr", nullable=false)
     private Reise ReiseNr;
 
-    @Column(name = "Name", lenght = 20, nullable=false)
+    @Column(name = "Name", length = 20, nullable=false)
     private String name;
 
     public String getName(){return name;}
