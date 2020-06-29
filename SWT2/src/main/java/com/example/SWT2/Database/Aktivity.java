@@ -7,8 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Aktivity")
 public class Aktivity {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "UserNr" ,length = 10, nullable = false)
@@ -23,10 +21,12 @@ public class Aktivity {
 
     @Column(name = "Kosten" ,precision= 10, scale= 2, nullable = false)
     private double Kosten;
-
+    
+    @ManyToOne
     @JoinColumn(name="UnternehmenId", nullable=false)
     private Unternehmen UnternehmenId;
-
+    
+    @ManyToOne
     @JoinColumn(name="ANr", nullable=false)
     private Aktivity Alternativ;
 }
