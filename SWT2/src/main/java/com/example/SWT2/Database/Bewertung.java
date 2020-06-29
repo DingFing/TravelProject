@@ -11,9 +11,11 @@ public class Bewertung {
     @Column(name = "BewertungNr" ,length = 10, nullable = false)
     Integer BewertungNr;
 
+    @ManyToOne
     @JoinColumn(name="UserNr", nullable=false)
     private User UserNr;
 
+    @ManyToOne
     @JoinColumn(name="ANr", nullable=false)
     private Aktivity ANr;
 
