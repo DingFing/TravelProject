@@ -1,13 +1,14 @@
 package com.example.SWT2.Database;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "BietetAn")
 public class BietetAn {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "BNr" ,length = 10, nullable = false)
+    Integer BNr;
 
     @JoinColumn(name="ReiseNr", nullable=false)
     private Reise ReiseNr;
@@ -26,4 +27,6 @@ public class BietetAn {
 
     public void setReiseNr(Reise ReiseNr) { this.ReiseNr = ReiseNr; }
     public Reise getReiseNr(){return ReiseNr;}
+
+    public Integer getBNr(){return BNr;}
 }

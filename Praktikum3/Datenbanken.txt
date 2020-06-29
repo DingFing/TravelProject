@@ -51,15 +51,15 @@ CREATE TABLE Reise(
     UnternehmenID INT(10) REFERENCES Unternehmen(UnternehmenID)
 );
 CREATE TABLE BietetAn(
+    BNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     ReiseNr INT(10) REFERENCES Reise(ReiseNr),
     ANr INT(10) REFERENCES Aktivity(ANr),
-    PRIMARY KEY (ReiseNr,ANr),
     Anzahl INT(1) NOT NULL
 );
 CREATE TABLE Bewertung(
+    BewertungNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     UserNr INT(10) REFERENCES User(UserNr),
     ANr INT(10) REFERENCES Aktivity(ANr),
-    PRIMARY KEY (UserNr,ANr),
     Bewertung TEXT NOT NULL,
     Note Double(1,1) NOT NULL
 );

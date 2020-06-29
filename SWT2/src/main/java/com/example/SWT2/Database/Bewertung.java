@@ -1,15 +1,15 @@
 package com.example.SWT2.Database;
 
 import org.hibernate.annotations.Type;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Bewertung")
 public class Bewertung {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "BewertungNr" ,length = 10, nullable = false)
+    Integer BewertungNr;
 
     @JoinColumn(name="UserNr", nullable=false)
     private User UserNr;
@@ -34,5 +34,7 @@ public class Bewertung {
     public void setANr(User UserNr){this.UserNr= UserNr;}
 
     public String getBewertung(){return Bewertung;}
-    public void setBewertung(String Bewert){this.Bewertung = Bewert;}
+    public void setBewertung(String Bewertung){this.Bewertung = Bewertung;}
+
+    public Integer getBewertungNr(){return BewertungNr;}
 }
