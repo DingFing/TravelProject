@@ -1,4 +1,4 @@
-package com.example.SWT2.Database;
+package com.example.SWT2.Database.Tables;
 
 
 import javax.persistence.*;

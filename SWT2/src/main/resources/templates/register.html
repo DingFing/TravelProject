@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrierung</title>
+</head>
+<body>
+    <form th:action="@{/save-user}" th:object="${User}" method="post">
+        <div>
+            <label>Nachname</label>
+            <input type="text" maxlength="20" size="20" th:field="*{Nachname}">
+        </div>
+        <div>
+            <label>Vorname</label>
+            <input type="text" maxlength="20" size="20" th:field="*{Vorname}">
+        </div>
+        <div>
+            <label>Geburtsdatum</label>
+            <input type="date" th:field="*{GeburtsDat}">
+        </div>
+        <div>
+            <label>Passwort</label>
+            <input type="password" maxlength="30" size="30" th:field="*{Password}">
+        </div>
+        <div>
+            <label>Kontonummer</label>
+            <input type="text" maxlength="10" size="10" th:field="*{KontoNr}">
+        </div>
+        <input type="submit">
+    </form>
+</body>
+</html>
