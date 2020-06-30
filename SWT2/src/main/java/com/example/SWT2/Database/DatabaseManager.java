@@ -78,15 +78,19 @@ public class DatabaseManager {
         return UnternehmenNr;
     }
 
-    public Integer AddAktivity(Integer KontoNr){
+    public Integer AddAktivity(String Jahreszeit, String Beschreibung, double Kosten, Unternehmen UnternehmenId, Aktivity alternativ){
         Session s = sf.openSession();
         Transaction tc = null;
-        Integer UnternehmenNr = null;
+        Integer AktivityNr = null;
         try{
             tc = s.beginTransaction();
-            Unternehmen un = new Unternehmen();
-            un.setKontoNr(KontoNr);
-            UnternehmenNr = (Integer) s.save(un);
+            Aktivity ak = new Aktivity();
+            ak.setAlternativ(alternativ);
+            ak.setBeschreibung(Beschreibung);
+            ak.setJahreszeit(Jahreszeit);
+            ak.setKosten(Kosten);
+            ak.setUnternehmen(UnternehmenId);
+            AktivityNr= (Integer) s.save(ak);
             tc.commit();
         }
         catch(HibernateException ex){
@@ -95,6 +99,28 @@ public class DatabaseManager {
         }finally{
             s.close();
         }
-        return UnternehmenNr;
+        return AktivityNr;
+    }
+
+    public Integer AddBuchung(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        Integer BuchungNr = null;
+        try{
+            tc = s.beginTransaction();
+            Buchung buch = new Buchung();
+            buch.setBis(Bis);
+            buch.setVon(Von);
+            buch.setReise(ReiseNr);
+            BuchungNr= (Integer) s.save(buch);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally{
+            s.close();
+        }
+        return BuchungNr;
     }
 }
