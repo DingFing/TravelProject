@@ -18,7 +18,7 @@ public class User {
     private String Vorname;
 
     @Column(name = "GeburtsDat" ,nullable = false)
-    private Date GeburtsDat;
+    private java.sql.Date GeburtsDat;
 
     @Column(name = "Password" ,length = 30, nullable = false)
     private String Password;
@@ -26,9 +26,11 @@ public class User {
     @Column(name = "KontoNr" ,length = 10, nullable = false)
     private Integer KontoNr;
 
-    public void setNachname(String Nachname){
-        this.Nachname = Nachname;
-    }
+    @Column(name= "Rolle" ,length= 1, nullable= false)
+    private Integer Rolle;
+
+
+    public void setNachname(String Nachname){this.Nachname = Nachname;}
     public String getNachname(){ return this.Nachname; }
 
     public void setVorname(String Vorname){this.Vorname = Vorname;}
@@ -36,8 +38,8 @@ public class User {
 
     public String getUserNr(){ return this.Vorname; }
 
-    public void setGeburtsDat(Date GeburtsDat){this.GeburtsDat = GeburtsDat;}
-    public Date getGeburtsDat(){ return this.GeburtsDat; }
+    public void setGeburtsDat(java.sql.Date GeburtsDat){this.GeburtsDat = GeburtsDat;}
+    public java.sql.Date getGeburtsDat(){ return this.GeburtsDat; }
 
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
     public Integer getKontoNr(){ return this.KontoNr; }

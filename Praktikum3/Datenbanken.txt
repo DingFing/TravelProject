@@ -18,6 +18,7 @@ CREATE TABLE User(
     GeburtsDat DATE NOT NULL,
     Vorname VARCHAR(20) NOT NULL,
     Nachname VARCHAR(20) NOT NULL,
+    Rolle Integer(1) NOT NULL,
     KontoNr INT(10) UNSIGNED NOT NULL
 );
 CREATE TABLE Unternehmen(
