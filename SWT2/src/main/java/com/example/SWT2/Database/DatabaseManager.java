@@ -123,4 +123,73 @@ public class DatabaseManager {
         }
         return BuchungNr;
     }
+
+    public Integer AddUrlaubsprofil(Integer ProfilNr, User UserNr, Reise ReiseNr, String name){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        Integer UrlaubsprofilNr = null;
+        try{
+            tc = s.beginTransaction();
+            Urlaubsprofile Profil = new Urlaubsprofile();
+            Profil.setName(name);
+            Profil.setProfilNr(ProfilNr);
+            Profil.setReiseNr(ReiseNr);
+            Profil.setUserNr(UserNr);
+            UrlaubsprofilNr= (Integer) s.save(Profil);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally{
+            s.close();
+        }
+        return UrlaubsprofilNr;
+    }
+
+    public Integer AddBewertung(User UserNr, Aktivity ANr, String Bewertung, double Note){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        Integer BewertungNr = null;
+        try{
+            tc = s.beginTransaction();
+            Bewertung bew = new Bewertung();
+            bew.setANr(ANr);
+            bew.setUserNr(UserNr);
+            bew.setBewertung(Bewertung);
+            bew.setNote(Note);
+            BewertungNr= (Integer) s.save(bew);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally{
+            s.close();
+        }
+        return BewertungNr;
+    }
+
+    public Integer AddReiseAktivity(Reise ReiseNr, Aktivity ANr){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        Integer BANr = null;
+        try{
+            tc = s.beginTransaction();
+            BietetAn BA = new BietetAn();
+            BA.setANr(ANr);
+            BA.setReiseNr(ReiseNr);
+            BANr= (Integer) s.save(BA);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally{
+            s.close();
+        }
+        return BANr;
+    }
 }
+    
+

@@ -16,12 +16,6 @@ public class BietetAn {
     @JoinColumn(name="ANr", nullable=false)
     private Aktivity ANr;
 
-    @Column(name = "Anzahl", length = 1, nullable=false)
-    private Integer Anzahl;
-
-    public void setAnzahl(Integer Anzahl) { this.Anzahl = Anzahl; }
-    public Integer getAnzahl(){return Anzahl;}
-
     public void setANr(Aktivity ANr) { this.ANr = ANr; }
     public Aktivity getANr(){return ANr;}
 
