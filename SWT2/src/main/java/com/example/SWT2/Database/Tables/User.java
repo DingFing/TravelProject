@@ -36,7 +36,7 @@ public class User {
     public String getUserNr(){ return this.Vorname; }
 
     public void setGeburtsDat(java.sql.Date GeburtsDat){this.GeburtsDat = GeburtsDat;}
-    public Date getGeburtsDat(){ return this.GeburtsDat; }
+    public java.sql.Date getGeburtsDat(){ return this.GeburtsDat; }
 
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
     public Integer getKontoNr(){ return this.KontoNr; }
