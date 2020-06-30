@@ -170,7 +170,7 @@ public class DatabaseManager {
         return BewertungNr;
     }
 
-    public Integer AddReiseAktivity(Reise ReiseNr, Aktivity ANr){
+    public Integer AddReiseBietetAnAktivity(Reise ReiseNr, Aktivity ANr){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BANr = null;

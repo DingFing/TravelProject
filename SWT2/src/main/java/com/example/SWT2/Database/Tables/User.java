@@ -1,6 +1,7 @@
-package com.example.SWT2.Database.Tables;
+package com.example.SWT2.Database;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "User")
@@ -26,8 +27,7 @@ public class User {
     private Integer KontoNr;
 
     @Column(name= "Rolle" ,length= 1, nullable= false)
-    private Integer Rolle;
-
+    private Integer Rolle; //1=Admin 0=User
 
     public void setNachname(String Nachname){this.Nachname = Nachname;}
     public String getNachname(){ return this.Nachname; }
@@ -42,6 +42,9 @@ public class User {
 
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
     public Integer getKontoNr(){ return this.KontoNr; }
+
+    public void setRolle(Integer Rolle){this.Rolle = Rolle;}
+    public Integer getRolle(){ return this.Rolle; }
 
     public void setPassword(String Password){this.Password= Password;}
     public String getPassword(){return this.Password;}
