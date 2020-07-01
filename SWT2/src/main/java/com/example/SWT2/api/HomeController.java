@@ -29,7 +29,7 @@ public class HomeController {
     @PostMapping("/save-user")
     public String outputData(@ModelAttribute User user){
         DatabaseManager db = new DatabaseManager();
-        db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr());
+        db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr(), 0);
         return "result";
     }
 }
