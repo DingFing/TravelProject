@@ -1,65 +1,65 @@
-DROP TABLE Aktivity;
-DROP TABLE Bewertung;
-DROP TABLE BietetAn;
-DROP TABLE Buchung;
-DROP TABLE Reise;
-DROP TABLE Unternehmen;
-DROP TABLE Urlaubsprofile;
-DROP TABLE User;
+DROP TABLE IF EXISTS Aktivity;
+DROP TABLE IF EXISTS Bewertung;
+DROP TABLE IF EXISTS BietetAn;
+DROP TABLE IF EXISTS Buchung;
+DROP TABLE IF EXISTS Reise;
+DROP TABLE IF EXISTS Unternehmen;
+DROP TABLE IF EXISTS Urlaubsprofile;
+DROP TABLE IF EXISTS User;
 
 CREATE TABLE Buchung(
-    BuchungID INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    UserNr INT(10) REFERENCES User(UserNr),
-    ReiseNr INT(10) REFERENCES Reise(ReiseNr),
+    Buchungid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Usernr INT(10) REFERENCES User(UserNr),
+    Reisenr INT(10) REFERENCES Reise(ReiseNr),
     Von Date NOT NULL,
     Bis Date NOT NULL
 );
 CREATE TABLE User(
-    UserNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Usernr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Password VARCHAR(30) NOT NULL,
-    GeburtsDat DATE NOT NULL,
+    Geburtsdat DATE NOT NULL,
     Vorname VARCHAR(20) NOT NULL,
     Nachname VARCHAR(20) NOT NULL,
     Rolle Integer(1) NOT NULL,
-    KontoNr INT(10) UNSIGNED NOT NULL
+    Kontonr INT(10) UNSIGNED NOT NULL
 );
 CREATE TABLE Unternehmen(
-    KontoNr INT(10) UNSIGNED NOT NULL,
-    UnternehmenID INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY 
+    Kontonr INT(10) UNSIGNED NOT NULL,
+    Unternehmenid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY 
 );
 CREATE TABLE Aktivity(
-    ANr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Anr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Jahreszeit VARCHAR(10) NOT NULL,
     Beschreibung TEXT NOT NULL,
     Kosten DOUBLE(10,2) NOT NULL, 
     Alternativ INT(10) REFERENCES Aktivity(ANr),
-    UnternehmenId INT(10) REFERENCES Unternehmen(UnternehmenID)
+    Unternehmenid INT(10) REFERENCES Unternehmen(UnternehmenID)
 );
 CREATE TABLE Urlaubsprofile(
-    ProfilNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    UserNr INT(10) REFERENCES User(UserNr),
-    ReiseNr INT(10) REFERENCES Reise(ReiseNr),
+    Profilnr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Usernr INT(10) REFERENCES User(UserNr),
+    Reisenr INT(10) REFERENCES Reise(ReiseNr),
     Name VARCHAR(20) NOT NULL
 );
 CREATE TABLE Reise(
-    ReiseNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Reisenr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Beschreibung TEXT NOT NULL,
     Ort VARCHAR(20) NOT NULL,
     Region VARCHAR(20) NOT NULL,
     Land VARCHAR(20) NOT NULL,
     Preis DOUBLE(10,2) NOT NULL,
     Jahreszeit VARCHAR(10) NOT NULL,
-    UnternehmenID INT(10) REFERENCES Unternehmen(UnternehmenID)
+    Unternehmenid INT(10) REFERENCES Unternehmen(UnternehmenID)
 );
 CREATE TABLE BietetAn(
-    BNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    ReiseNr INT(10) REFERENCES Reise(ReiseNr),
-    ANr INT(10) REFERENCES Aktivity(ANr)
+    Bnr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Reisenr INT(10) REFERENCES Reise(ReiseNr),
+    Anr INT(10) REFERENCES Aktivity(ANr)
 );
 CREATE TABLE Bewertung(
-    BewertungNr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    UserNr INT(10) REFERENCES User(UserNr),
-    ANr INT(10) REFERENCES Aktivity(ANr),
+    Bewertungnr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Usernr INT(10) REFERENCES User(UserNr),
+    Anr INT(10) REFERENCES Aktivity(ANr),
     Bewertung TEXT NOT NULL,
     Note Double(1,1) NOT NULL
 );

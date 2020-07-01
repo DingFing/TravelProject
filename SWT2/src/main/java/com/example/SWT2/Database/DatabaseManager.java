@@ -135,7 +135,6 @@ public class DatabaseManager {
             tc = s.beginTransaction();
             Urlaubsprofile Profil = new Urlaubsprofile();
             Profil.setName(name);
-            Profil.setProfilNr(ProfilNr);
             Profil.setReiseNr(ReiseNr);
             Profil.setUserNr(UserNr);
             UrlaubsprofilNr= (Integer) s.save(Profil);

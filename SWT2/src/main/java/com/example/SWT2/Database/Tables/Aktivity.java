@@ -8,9 +8,9 @@ import javax.persistence.*;
 @Table(name = "Aktivity")
 public class Aktivity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "UserNr" ,length = 10, nullable = false)
-    private Integer ANr;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Anr" ,length = 10, nullable = false)
+    private Integer Anr;
 
     @Column(name = "Jahreszeit" ,length = 10, nullable = false)
     private String Jahreszeit;
@@ -24,12 +24,14 @@ public class Aktivity {
     
     @ManyToOne
     @JoinColumn(name="UnternehmenId", nullable=false)
-    private Unternehmen UnternehmenId;
+    private Unternehmen Unternehmenid;
     
-    @ManyToOne
-    @JoinColumn(name="ANr", nullable=false)
+    @OneToMany
+    @JoinColumn(name="Alternativ", nullable=false)
     private Aktivity Alternativ;
 
+    public Integer getAnr(){return Anr;}
+    
     public void setJahreszeit(String Jahreszeit){this.Jahreszeit = Jahreszeit;}
     public String getJahreszeit(){return this.Jahreszeit;}
 
@@ -39,8 +41,8 @@ public class Aktivity {
     public void setKosten(double Kosten){this.Kosten = Kosten;}
     public double getKosten(){return this.Kosten;}
 
-    public void setUnternehmen(Unternehmen UnternehmenId){this.UnternehmenId = UnternehmenId;}
-    public Unternehmen getUnternehmen(){return this.UnternehmenId;}
+    public void setUnternehmen(Unternehmen Unternehmenid){this.Unternehmenid = Unternehmenid;}
+    public Unternehmen getUnternehmen(){return this.Unternehmenid;}
 
     public void setAlternativ(Aktivity Alternativ){this.Alternativ = Alternativ;}
     public Aktivity getAlternativ(){return this.Alternativ;}

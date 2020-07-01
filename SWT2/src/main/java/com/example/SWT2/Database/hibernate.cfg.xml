@@ -8,5 +8,14 @@
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="show_sql">true</property>
+
+        <mapping class="com.example.SWT2.Database.Tables.Aktivity"/>
+        <mapping class="com.example.SWT2.Database.Tables.Bewertung"/>
+        <mapping class="com.example.SWT2.Database.Tables.BietetAn"/>
+        <mapping class="com.example.SWT2.Database.Tables.Buchung"/>
+        <mapping class="com.example.SWT2.Database.Tables.Reise"/>
+        <mapping class="com.example.SWT2.Database.Tables.Unternehmen"/>
+        <mapping class="com.example.SWT2.Database.Tables.Urlaubsprofile"/>
+        <mapping class="com.example.SWT2.Database.Tables.User"/>
     </session-factory>
 </hibernate-configuration>

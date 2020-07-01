@@ -7,15 +7,15 @@ import javax.persistence.*;
 @Table(name = "Aktivity")
 public class Urlaubsprofile {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ProfilNr" ,length = 10, nullable = false)
-    private Integer ProfilNr;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Profilnr" ,length = 10, nullable = false)
+    private Integer Profilnr;
     @ManyToOne
-    @JoinColumn(name="UserNr", nullable=false)
-    private User UserNr;
+    @JoinColumn(name="Usernr", nullable=false)
+    private User Usernr;
     @ManyToOne
-    @JoinColumn(name="ReiseNr", nullable=false)
-    private Reise ReiseNr;
+    @JoinColumn(name="Reisenr", nullable=false)
+    private Reise Reisenr;
 
     @Column(name = "Name", length = 20, nullable=false)
     private String name;
@@ -23,12 +23,11 @@ public class Urlaubsprofile {
     public String getName(){return name;}
     public void setName(String name){this.name = name;}
 
-    public void setReiseNr(Reise ReiseNr){this.ReiseNr = ReiseNr;}
-    public Reise getReiseNr(){return ReiseNr;}
+    public void setReiseNr(Reise Reisenr){this.Reisenr = Reisenr;}
+    public Reise getReiseNr(){return Reisenr;}
 
-    public void setUserNr(User UserNr){this.UserNr = UserNr;}
-    public User getUserNr(){return UserNr;}
+    public void setUserNr(User Usernr){this.Usernr = Usernr;}
+    public User getUserNr(){return Usernr;}
 
-    public void setProfilNr(Integer ProfilNr){this.ProfilNr = ProfilNr;}
-    public Integer getProfilNr(){return ProfilNr;}
+    public Integer getProfilnr(){return Profilnr;}
 }

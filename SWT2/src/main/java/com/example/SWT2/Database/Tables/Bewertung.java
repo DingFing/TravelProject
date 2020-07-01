@@ -7,17 +7,17 @@ import javax.persistence.*;
 @Table(name = "Bewertung")
 public class Bewertung {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "BewertungNr" ,length = 10, nullable = false)
-    Integer BewertungNr;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Bewertungnr" ,length = 10, nullable = false)
+    Integer Bewertungnr;
 
     @ManyToOne
-    @JoinColumn(name="UserNr", nullable=false)
-    private User UserNr;
+    @JoinColumn(name="Usernr", nullable=false)
+    private User Usernr;
 
     @ManyToOne
-    @JoinColumn(name="ANr", nullable=false)
-    private Aktivity ANr;
+    @JoinColumn(name="Anr", nullable=false)
+    private Aktivity Anr;
 
     @Column(name= "Bewertung" ,nullable= false)
     @Type(type= "text")
@@ -26,17 +26,19 @@ public class Bewertung {
     @Column(name= "Note", precision= 1, scale= 1, nullable= false)
     private double Note;
 
+    public Integer getBewertungnr(){return Bewertungnr;}
+
     public double getNote(){return Note;}
     public void setNote(double Note){this.Note= Note;}
 
-    public Aktivity getANr(){return ANr;}
-    public void setANr(Aktivity ANr){this.ANr= ANr;}
+    public Aktivity getANr(){return Anr;}
+    public void setANr(Aktivity Anr){this.Anr= Anr;}
 
-    public User getUserNr(){return UserNr;}
-    public void setUserNr(User UserNr){this.UserNr= UserNr;}
+    public User getUserNr(){return Usernr;}
+    public void setUserNr(User Usernr){this.Usernr= Usernr;}
 
     public String getBewertung(){return Bewertung;}
     public void setBewertung(String Bewertung){this.Bewertung = Bewertung;}
 
-    public Integer getBewertungNr(){return BewertungNr;}
+    public Integer getBewertungNr(){return Bewertungnr;}
 }

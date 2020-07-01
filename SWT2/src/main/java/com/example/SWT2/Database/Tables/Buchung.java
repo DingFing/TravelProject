@@ -6,9 +6,9 @@ import javax.persistence.*;
 @Table(name = "Buchung")
 public class Buchung {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "BuchungID" ,length = 10, nullable = false)
-    private Integer BuchungId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Buchungid" ,length = 10, nullable = false)
+    private Integer Buchungid;
 
     
     @Column(name = "Von" , nullable = false)
@@ -18,12 +18,12 @@ public class Buchung {
     private java.sql.Date Bis;
 
     @ManyToOne
-    @JoinColumn(name="ReiseNr", nullable=false)
-    private Reise ReiseNr;
+    @JoinColumn(name="Reisenr", nullable=false)
+    private Reise Reisenr;
 
     @ManyToOne
-    @JoinColumn(name="UserNr", nullable=false)
-    private User UserNr;
+    @JoinColumn(name="Usernr", nullable=false)
+    private User Usernr;
 
     public void setBis(java.sql.Date Bis){ this.Bis = Bis; }
     public java.sql.Date getBis(){return this.Bis;}
@@ -31,11 +31,11 @@ public class Buchung {
     public void setVon(java.sql.Date Von){ this.Von = Von; }
     public java.sql.Date getVon(){return this.Von;}
 
-    public Integer getBuchungId(){return this.BuchungId;}
+    public Integer getBuchungid(){return this.Buchungid;}
 
-    public void setReise(Reise ReiseNr){this.ReiseNr = ReiseNr;}
-    public Reise getReise(){return this.ReiseNr;}
+    public void setReise(Reise Reisenr){this.Reisenr = Reisenr;}
+    public Reise getReise(){return this.Reisenr;}
 
-    public void setUser(User UserNr){this.UserNr= UserNr;}
-    public User getUser(){return this.UserNr;}
+    public void setUser(User Usernr){this.Usernr= Usernr;}
+    public User getUser(){return this.Usernr;}
 }

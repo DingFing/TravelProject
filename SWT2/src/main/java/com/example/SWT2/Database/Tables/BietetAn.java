@@ -6,21 +6,21 @@ import javax.persistence.*;
 @Table(name = "BietetAn")
 public class BietetAn {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "BNr" ,length = 10, nullable = false)
-    Integer BNr;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Bnr" ,length = 10, nullable = false)
+    Integer Bnr;
     @ManyToOne
-    @JoinColumn(name="ReiseNr", nullable=false)
-    private Reise ReiseNr;
+    @JoinColumn(name="Reisenr", nullable=false)
+    private Reise Reisenr;
     @ManyToOne
-    @JoinColumn(name="ANr", nullable=false)
-    private Aktivity ANr;
+    @JoinColumn(name="Anr", nullable=false)
+    private Aktivity Anr;
 
-    public void setANr(Aktivity ANr) { this.ANr = ANr; }
-    public Aktivity getANr(){return ANr;}
+    public Integer getBnr(){return Bnr;}
 
-    public void setReiseNr(Reise ReiseNr) { this.ReiseNr = ReiseNr; }
-    public Reise getReiseNr(){return ReiseNr;}
+    public void setANr(Aktivity Anr) { this.Anr = Anr;}
+    public Aktivity getANr(){return Anr;}
 
-    public Integer getBNr(){return BNr;}
+    public void setReiseNr(Reise Reisenr) { this.Reisenr = Reisenr; }
+    public Reise getReiseNr(){return Reisenr;}
 }

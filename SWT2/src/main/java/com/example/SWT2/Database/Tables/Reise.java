@@ -7,9 +7,9 @@ import javax.persistence.*;
 @Table(name = "Reise")
 public class Reise {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name= "ReiseNr" ,length= 10, nullable= false)
-    private Integer ReiseNr;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "Reisenr" ,length= 10, nullable= false)
+    private Integer Reisenr;
 
     @Column(name= "Beschreibung" ,nullable= false)
     @Type(type= "text")
@@ -31,11 +31,13 @@ public class Reise {
     private String Jahreszeit;
 
     @ManyToOne
-    @JoinColumn(name="UnternehmenId", nullable=false)
-    private Unternehmen UnternehmenId;
+    @JoinColumn(name="Unternehmenid", nullable=false)
+    private Unternehmen Unternehmenid;
 
-    public Unternehmen getUnternehmenId(){return UnternehmenId;}
-    public void setUnternehmenId(Unternehmen UnternehmenId){this.UnternehmenId= UnternehmenId;}
+    public Integer getReisenr(){return Reisenr;}
+    
+    public Unternehmen getUnternehmenId(){return Unternehmenid;}
+    public void setUnternehmenId(Unternehmen Unternehmenid){this.Unternehmenid= Unternehmenid;}
 
     public String getJahreszeit(){return Jahreszeit;}
     public void setJahreszeit(String Jahreszeit){this.Jahreszeit= Jahreszeit;}
