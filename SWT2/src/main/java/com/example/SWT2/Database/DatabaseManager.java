@@ -102,7 +102,7 @@ public class DatabaseManager {
         return AktivityNr;
     }
 
-    public Integer AddBuchung(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr){
+    public Integer AddBuchung(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr, User UserNr){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BuchungNr = null;
@@ -112,6 +112,7 @@ public class DatabaseManager {
             buch.setBis(Bis);
             buch.setVon(Von);
             buch.setReise(ReiseNr);
+            buch.setUser(UserNr);
             BuchungNr= (Integer) s.save(buch);
             tc.commit();
         }
@@ -190,14 +191,17 @@ public class DatabaseManager {
         }
         return BANr;
     }
-    
-    //User Parameter ändern
-    //Reise anlegen
-    //Reise suchen anhand von Parametern
-    //Unternehmen suchen anhand von Parametern
+
+    //Unternhemen anhand von Parametern ausgeben
+    //Reise anhand von Parametern ausgeben
+    //User anhand von Parametern ausgeben
     //Aktivität für eine Reise ausgeben
-    //Buchung anzeigen
-    //Urlaubsprofile anzeigen
+    //Buchung eines Users anzeigen
     //Bewertungen anzeien für eine Aktivität
-    //Bewertungne anzeigen die man schon gemacht hat
+    //Bewertungen anzeigen die man schon gemacht hat
+    //Urlaubsprofile anzeigen
+
+    //User Parameter ändern
+    //Aktivität zu einer Reise hinzufügen als Unternehmen
+    
 }

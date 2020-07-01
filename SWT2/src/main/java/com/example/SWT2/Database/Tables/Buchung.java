@@ -20,6 +20,10 @@ public class Buchung {
     @JoinColumn(name="ReiseNr", nullable=false)
     private Reise ReiseNr;
 
+    @ManyToOne
+    @JoinColumn(name="UserNr", nullable=false)
+    private User UserNr;
+
     public void setBis(java.sql.Date Bis){ this.Bis = Bis; }
     public java.sql.Date getBis(){return this.Bis;}
 
@@ -30,4 +34,7 @@ public class Buchung {
 
     public void setReise(Reise ReiseNr){this.ReiseNr = ReiseNr;}
     public Reise getReise(){return this.ReiseNr;}
+
+    public void setUser(User UserNr){this.UserNr= UserNr;}
+    public User getUser(){return this.UserNr;}
 }
