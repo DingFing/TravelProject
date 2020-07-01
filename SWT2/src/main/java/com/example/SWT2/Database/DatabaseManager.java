@@ -7,7 +7,7 @@ import org.hibernate.cfg.*;
 public class DatabaseManager {
     private SessionFactory sf;
     public DatabaseManager(){
-        sf = new Configuration().configure().buildSessionFactory();
+        sf = new Configuration().configure("/com/example/SWT2/Database/hibernate.cfg.xml").buildSessionFactory();
     }
 
     public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer KontoNr, Integer Rolle){
