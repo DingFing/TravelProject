@@ -2,12 +2,14 @@ package com.example.SWT2.Database;
 
 import com.example.SWT2.Database.Tables.*;
 import org.hibernate.*;
-
 import org.hibernate.cfg.*;
 
 public class DatabaseManager {
+    private SessionFactory sf;
+    public DatabaseManager(){
+        sf = new Configuration().configure().buildSessionFactory();
+    }
 
-    private static SessionFactory sf;
     public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer KontoNr, Integer Rolle){
         Session s = sf.openSession();
         Transaction tc = null;
