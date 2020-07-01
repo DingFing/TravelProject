@@ -26,7 +26,7 @@ public class User {
     private Integer Kontonr;
 
     @Column(name= "Rolle" ,length= 1, nullable= false)
-    private Integer Rolle; //0=User 1=Admin 2=Support
+    private Integer Rolle; //0=User 1=Admin
 
     public void setNachname(String Nachname){this.Nachname = Nachname;}
     public String getNachname(){ return this.Nachname; }
