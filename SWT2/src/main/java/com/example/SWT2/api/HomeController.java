@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.SWT2.Database.Tables.User;
+import com.example.SWT2.Database.DatabaseManager;
 
 @Controller
 public class HomeController {
+
     // Homepage
     @GetMapping("/")
     public String gotoHomepage(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model){
@@ -23,9 +25,11 @@ public class HomeController {
         model.addAttribute("User", new User());
         return "register";
     }
-    // Register Test Output
+    // Register save user in Database & Test Output 
     @PostMapping("/save-user")
     public String outputData(@ModelAttribute User user){
+        DatabaseManager db = new DatabaseManager();
+        db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr());
         return "result";
     }
 }
