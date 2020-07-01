@@ -190,6 +190,14 @@ public class DatabaseManager {
         }
         return BANr;
     }
-}
     
-
+    //User Parameter ändern
+    //Reise anlegen
+    //Reise suchen anhand von Parametern
+    //Unternehmen suchen anhand von Parametern
+    //Aktivität für eine Reise ausgeben
+    //Buchung anzeigen
+    //Urlaubsprofile anzeigen
+    //Bewertungen anzeien für eine Aktivität
+    //Bewertungne anzeigen die man schon gemacht hat
+}
