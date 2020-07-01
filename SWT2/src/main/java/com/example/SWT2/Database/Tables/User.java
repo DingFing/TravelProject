@@ -25,9 +25,10 @@ public class User {
     @Column(name = "KontoNr" ,length = 10, nullable = false)
     private Integer KontoNr;
 
-    public void setNachname(String Nachname){
-        this.Nachname = Nachname;
-    }
+    @Column(name= "Rolle" ,length= 1, nullable= false)
+    private Integer Rolle; //0=User 1=Admin 2=Support
+
+    public void setNachname(String Nachname){this.Nachname = Nachname;}
     public String getNachname(){ return this.Nachname; }
 
     public void setVorname(String Vorname){this.Vorname = Vorname;}
@@ -40,6 +41,9 @@ public class User {
 
     public void setKontoNr(Integer KontoNr){this.KontoNr = KontoNr;}
     public Integer getKontoNr(){ return this.KontoNr; }
+
+    public void setRolle(Integer Rolle){this.Rolle = Rolle;}
+    public Integer getRolle(){ return this.Rolle; }
 
     public void setPassword(String Password){this.Password= Password;}
     public String getPassword(){return this.Password;}

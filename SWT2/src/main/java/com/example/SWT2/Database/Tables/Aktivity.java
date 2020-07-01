@@ -29,4 +29,19 @@ public class Aktivity {
     @ManyToOne
     @JoinColumn(name="ANr", nullable=false)
     private Aktivity Alternativ;
+
+    public void setJahreszeit(String Jahreszeit){this.Jahreszeit = Jahreszeit;}
+    public String getJahreszeit(){return this.Jahreszeit;}
+
+    public void setBeschreibung(String Beschreibung){this.Beschreibung = Beschreibung;}
+    public String getBeschreibung(){return this.Beschreibung;}
+
+    public void setKosten(double Kosten){this.Kosten = Kosten;}
+    public double getKosten(){return this.Kosten;}
+
+    public void setUnternehmen(Unternehmen UnternehmenId){this.UnternehmenId = UnternehmenId;}
+    public Unternehmen getUnternehmen(){return this.UnternehmenId;}
+
+    public void setAlternativ(Aktivity Alternativ){this.Alternativ = Alternativ;}
+    public Aktivity getAlternativ(){return this.Alternativ;}
 }

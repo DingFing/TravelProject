@@ -1,7 +1,6 @@
 package com.example.SWT2.Database.Tables;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "Buchung")
@@ -12,16 +11,30 @@ public class Buchung {
     private Integer BuchungId;
 
     @Column(name = "Von" , nullable = false)
-    private Date Von;
+    private java.sql.Date Von;
 
     @Column(name = "Bis" , nullable = false)
-    private Date Bis;
+    private java.sql.Date Bis;
 
-    public void setBis(Date Bis){ this.Bis = Bis; }
-    public Date getBis(){return this.Bis;}
+    @ManyToOne
+    @JoinColumn(name="ReiseNr", nullable=false)
+    private Reise ReiseNr;
 
-    public void setVon(Date Von){ this.Von = Von; }
-    public Date getVon(){return this.Von;}
+    @ManyToOne
+    @JoinColumn(name="UserNr", nullable=false)
+    private User UserNr;
+
+    public void setBis(java.sql.Date Bis){ this.Bis = Bis; }
+    public java.sql.Date getBis(){return this.Bis;}
+
+    public void setVon(java.sql.Date Von){ this.Von = Von; }
+    public java.sql.Date getVon(){return this.Von;}
 
     public Integer getBuchungId(){return this.BuchungId;}
+
+    public void setReise(Reise ReiseNr){this.ReiseNr = ReiseNr;}
+    public Reise getReise(){return this.ReiseNr;}
+
+    public void setUser(User UserNr){this.UserNr= UserNr;}
+    public User getUser(){return this.UserNr;}
 }

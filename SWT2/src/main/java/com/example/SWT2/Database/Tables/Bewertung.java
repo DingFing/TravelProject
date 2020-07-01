@@ -33,7 +33,7 @@ public class Bewertung {
     public void setANr(Aktivity ANr){this.ANr= ANr;}
 
     public User getUserNr(){return UserNr;}
-    public void setANr(User UserNr){this.UserNr= UserNr;}
+    public void setUserNr(User UserNr){this.UserNr= UserNr;}
 
     public String getBewertung(){return Bewertung;}
     public void setBewertung(String Bewertung){this.Bewertung = Bewertung;}
