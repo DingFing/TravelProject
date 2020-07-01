@@ -10,6 +10,7 @@ public class Buchung {
     @Column(name = "BuchungID" ,length = 10, nullable = false)
     private Integer BuchungId;
 
+    
     @Column(name = "Von" , nullable = false)
     private java.sql.Date Von;
 
