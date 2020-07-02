@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header-Fragment</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <ol class="menu-options">
+            <li class="menu-items">Option 1</li>
+            <li class="menu-items">Option 2</li>
+            <li class="menu-items">Option 3</li>
+        </ol>
+        <a href="/register-form" class="menu-link">
+            Register
+        </a>
+        <a href="/login-form" class="menu-link">
+            Login
+        </a>
+        <p id="test">Platzhalter Logo</p> 
+    </header>
+</body>
+</html>

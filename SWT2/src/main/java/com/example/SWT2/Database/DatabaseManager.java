@@ -1,5 +1,7 @@
 package com.example.SWT2.Database;
 
+import java.util.ArrayList;
+
 import com.example.SWT2.Database.Tables.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
@@ -192,6 +194,15 @@ public class DatabaseManager {
             s.close();
         }
         return BANr;
+    }
+
+    public boolean userAngemeldet(String vorname, String nachname, String password){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select * from User where vorname = '"+vorname+"' and nachname = '"+nachname+"' and password = '"+password+"'");
+        ArrayList a = new ArrayList(query.getResultList());
+        if(a.isEmpty())
+            return false;
+        return true;
     }
 
     //Unternhemen anhand von Parametern ausgeben
