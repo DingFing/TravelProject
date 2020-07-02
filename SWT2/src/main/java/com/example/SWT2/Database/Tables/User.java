@@ -47,4 +47,8 @@ public class User {
 
     public void setPassword(String Password){this.Password= Password;}
     public String getPassword(){return this.Password;}
+
+    public boolean isAdmin(){
+        return (Rolle != 0) ? true : false;
+    }
 }

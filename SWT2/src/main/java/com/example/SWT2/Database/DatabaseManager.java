@@ -13,6 +13,7 @@ public class DatabaseManager {
         sf = new Configuration().configure().buildSessionFactory();
     }
 
+
     public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer KontoNr, Integer Rolle){
         Session s = sf.openSession();
         Transaction tc = null;
@@ -203,6 +204,12 @@ public class DatabaseManager {
         if(a.isEmpty())
             return false;
         return true;
+    }
+    public ArrayList<Reise> gebuchteReisenVonUser(){
+        Session s = sf.openSession();
+        ArrayList<Reise> aReise = new ArrayList<Reise>();
+        SQLQuery query = s.createSQLQuery("");//Reisen für einen User ausgeben
+        return aReise;
     }
 
     //Unternhemen anhand von Parametern ausgeben

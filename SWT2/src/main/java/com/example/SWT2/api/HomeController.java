@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import java.util.ArrayList;
 import com.example.SWT2.Database.Tables.User;
 import com.example.SWT2.Database.DatabaseManager;
 
@@ -42,15 +42,21 @@ public class HomeController {
     }
 
     // Log-in User
-    @PostMapping("/login-user")
+    @PostMapping("/login")
     public String loginUser(@ModelAttribute User user){
         DatabaseManager db = new DatabaseManager();
         if(db.userAngemeldet(user.getVorname(), user.getNachname(), user.getPassword())){
-            System.out.println("Angemeldet");
-            return "home";
-        } else {
+            if(user.isAdmin()){     //Der User ist Admin
+                ArrayList<Object> ar = new ArrayList<Object>();
+                return "home";
+            }else{                  //Normaler User Login erfolgreich
+                ArrayList<Object> ar = new ArrayList<Object>();
+                System.out.println("Angemeldet");
+                return "home";
+            }
+        } else {                    //Anmeldung nicht erfolgreich
             System.out.println("Nicht Angemeldet");
-            return "home";
+            return "login";
         }
     }
 }
