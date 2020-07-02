@@ -26,7 +26,7 @@ public class Aktivity {
     @JoinColumn(name="UnternehmenId", nullable=false)
     private Unternehmen Unternehmenid;
     
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="Alternativ", nullable=false)
     private Aktivity Alternativ;
 

@@ -9,8 +9,8 @@ public class Swt2Application {
 
 	public static void main(String[] args) {
         SpringApplication.run(Swt2Application.class, args);
-        DatabaseManager db = new DatabaseManager();
-        java.sql.Date da = new java.sql.Date(1998,06,21);
-        db.adduser("Jan", "Lano",da,"ZZ",1123456789,0);
+        //DatabaseManager db = new DatabaseManager();
+        //java.sql.Date da = new java.sql.Date(1998,06,21);
+        //db.adduser("Jana", "Lano",da,"ZZ",1123456789,0);
     }
 }
