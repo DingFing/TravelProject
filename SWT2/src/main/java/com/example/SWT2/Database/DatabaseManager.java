@@ -1,7 +1,7 @@
 package com.example.SWT2.Database;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import com.example.SWT2.Database.Tables.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
@@ -205,10 +205,17 @@ public class DatabaseManager {
             return false;
         return true;
     }
-    public ArrayList<Reise> gebuchteReisenVonUser(){
+    public ArrayList<Object> gebuchteReisenVonUser(User user){
         Session s = sf.openSession();
-        ArrayList<Reise> aReise = new ArrayList<Reise>();
-        SQLQuery query = s.createSQLQuery("");//Reisen für einen User ausgeben
+        ArrayList<Object> aReise = new ArrayList<Object>();
+        String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis from Reise r, Buchung b where b.Usernr ="+user.getUsernr();
+        SQLQuery query = s.createSQLQuery(Ab);
+        List<Object[]> l = query.list();
+        aReise.add(query.list());
+        for(Object[] r : l){
+            for(int i=0;i<6;i++)
+                System.out.println(r[i].toString()+"  ");
+        }
         return aReise;
     }
 

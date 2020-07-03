@@ -48,9 +48,12 @@ public class HomeController {
         if(db.userAngemeldet(user.getVorname(), user.getNachname(), user.getPassword())){
             if(user.isAdmin()){     //Der User ist Admin
                 ArrayList<Object> ar = new ArrayList<Object>();
-                return "home";
+                ar.add(user);
+                return "adminhome";
             }else{                  //Normaler User Login erfolgreich
                 ArrayList<Object> ar = new ArrayList<Object>();
+                ar.add(user);
+                ar.add(db.gebuchteReisenVonUser(user));
                 System.out.println("Angemeldet");
                 return "home";
             }
