@@ -43,17 +43,19 @@ public class HomeController {
 
     // Log-in User
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user){
+    public String loginUser(@ModelAttribute User user, Model model){
         DatabaseManager db = new DatabaseManager();
         if(db.userAngemeldet(user.getVorname(), user.getNachname(), user.getPassword())){
             if(user.isAdmin()){     //Der User ist Admin
                 ArrayList<Object> ar = new ArrayList<Object>();
                 ar.add(user);
+                System.out.println("AdminAngemeldet");
                 return "adminhome";
             }else{                  //Normaler User Login erfolgreich
                 ArrayList<Object> ar = new ArrayList<Object>();
                 ar.add(user);
                 ar.add(db.gebuchteReisenVonUser(user));
+                model.addAttribute("Object",ar);
                 System.out.println("Angemeldet");
                 return "home";
             }

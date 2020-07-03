@@ -208,14 +208,15 @@ public class DatabaseManager {
     public ArrayList<Object> gebuchteReisenVonUser(User user){
         Session s = sf.openSession();
         ArrayList<Object> aReise = new ArrayList<Object>();
+        //String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis from Reise r, Buchung b where b.Usernr = 1";
         String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis from Reise r, Buchung b where b.Usernr ="+user.getUsernr();
         SQLQuery query = s.createSQLQuery(Ab);
         List<Object[]> l = query.list();
         aReise.add(query.list());
-        for(Object[] r : l){
+        /*for(Object[] r : l){
             for(int i=0;i<6;i++)
                 System.out.println(r[i].toString()+"  ");
-        }
+        }*/
         return aReise;
     }
 
