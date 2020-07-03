@@ -197,7 +197,7 @@ public class DatabaseManager {
         return BANr;
     }
 
-    public boolean userAngemeldet(String vorname, String nachname, String password){
+    public boolean userVorhanden(String vorname, String nachname, String password){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select * from User where vorname = '"+vorname+"' and nachname = '"+nachname+"' and password = '"+password+"'");
         ArrayList a = new ArrayList(query.getResultList());
@@ -205,10 +205,18 @@ public class DatabaseManager {
             return false;
         return true;
     }
+
+    public boolean userAdmin(User user){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select Rolle from User where vorname = '"+user.getVorname()+"' and nachname = '"+user.getNachname()+"' and password = '"+user.getPassword()+"';");
+        if(query.getSingleResult().toString() == "0")
+            return false;
+        return true;
+    }
+
     public ArrayList<Object> gebuchteReisenVonUser(User user){
         Session s = sf.openSession();
         ArrayList<Object> aReise = new ArrayList<Object>();
-        //String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis from Reise r, Buchung b where b.Usernr = 1";
         String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis from Reise r, Buchung b where b.Usernr ="+user.getUsernr();
         SQLQuery query = s.createSQLQuery(Ab);
         List<Object[]> l = query.list();
@@ -219,7 +227,6 @@ public class DatabaseManager {
         }*/
         return aReise;
     }
-
     //Unternhemen anhand von Parametern ausgeben
     //Reise anhand von Parametern ausgeben
     //User anhand von Parametern ausgeben

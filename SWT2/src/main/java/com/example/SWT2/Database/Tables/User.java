@@ -5,6 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 public class User {
+    public User(){
+        this.Rolle = 0;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Usernr" ,length = 10, nullable = false)
@@ -47,8 +50,4 @@ public class User {
 
     public void setPassword(String Password){this.Password= Password;}
     public String getPassword(){return this.Password;}
-
-    public boolean isAdmin(){
-        return (Rolle != 0) ? true : false;
-    }
 }

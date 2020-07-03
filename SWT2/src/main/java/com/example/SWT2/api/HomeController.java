@@ -12,41 +12,26 @@ import com.example.SWT2.Database.DatabaseManager;
 
 @Controller
 public class HomeController {
-
+    
+    
     // Homepage
     @GetMapping("/")
     public String gotoHomepage(){
         return "home";
     }
-
-    // Open Register-Form
-    @GetMapping("/register-form")
-    public String createRegisterForm(Model model) {
-        model.addAttribute("User", new User());
-        return "register";
-    }
-
     // Open Login-Form
     @GetMapping("/login-form")
     public String createLoginForm(Model model) {
         model.addAttribute("User", new User());
         return "login";
     }
-
-    // Register user in Database
-    @PostMapping("/save-user")
-    public String outputData(@ModelAttribute User user){
-        DatabaseManager db = new DatabaseManager();
-        db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr(), 0);
-        return "home";
-    }
-
     // Log-in User
     @PostMapping("/login")
     public String loginUser(@ModelAttribute User user, Model model){
+        //System.out.println("#########"+user.getNachname() + "##############" + user.getVorname() + "###############" + user.getPassword());
         DatabaseManager db = new DatabaseManager();
-        if(db.userAngemeldet(user.getVorname(), user.getNachname(), user.getPassword())){
-            if(user.isAdmin()){     //Der User ist Admin
+        if(db.userVorhanden(user.getVorname(), user.getNachname(), user.getPassword())){
+            if(db.userAdmin(user)){     //Der User ist Admin
                 ArrayList<Object> ar = new ArrayList<Object>();
                 ar.add(user);
                 System.out.println("AdminAngemeldet");
@@ -63,5 +48,20 @@ public class HomeController {
             System.out.println("Nicht Angemeldet");
             return "login";
         }
+    }
+
+    // Open Register-Form
+    @GetMapping("/register-form")
+    public String createRegisterForm(Model model) {
+        model.addAttribute("User", new User());
+        return "register";
+    }
+
+    // Register user in Database
+    @PostMapping("/save-user")
+    public String outputData(@ModelAttribute User user){
+        DatabaseManager db = new DatabaseManager();
+        db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr(), 0);
+        return "home";
     }
 }
