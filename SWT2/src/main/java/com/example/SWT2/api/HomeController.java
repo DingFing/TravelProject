@@ -29,27 +29,30 @@ public class HomeController {
     }
     // Log-in User
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model, HttpSession session){
+    public String loginUser(@ModelAttribute User user, Model model){
         DatabaseManager db = new DatabaseManager();
         if(db.userVorhanden(user.getVorname(), user.getNachname(), user.getPassword())){
-            if(db.userAdmin(user)){         //Der User ist Admin
+            if(db.userAdmin(user) == true){         //Der User ist Admin
                 user.setRolle(1);
-                session.setAttribute("user", user);
-                System.out.println("AdminAngemeldet");
-                return "adminhome";
-            }else{                          //Normaler User Login erfolgreich
                 ArrayList<Object> ar = new ArrayList<Object>();
                 ar.add(user);
-                ar.add(db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+                model.addAttribute("ar", ar);
+                System.out.println("AdminAngemeldet");
+                return "home";
+            }
+            else{                          //Normaler User Login erfolgreich
+                ArrayList<Object> ar = new ArrayList<Object>();
                 user.setRolle(0);
-                session.setAttribute("user", user);
+                ar.add(user);
+                ar.add(db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
                 model.addAttribute("ar",ar);
                 System.out.println("Angemeldet");
                 return "home";
             }
-        } else {                            //Anmeldung nicht erfolgreich
+        } 
+        else{                            //Anmeldung nicht erfolgreich
             System.out.println("Nicht Angemeldet");
-            return "login";
+            return "home";
         }
     }
 
@@ -65,6 +68,11 @@ public class HomeController {
     public String outputData(@ModelAttribute User user){
         DatabaseManager db = new DatabaseManager();
         db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr(), 0);
+        return "home";
+    }
+
+    @PostMapping("/logout")
+    public String logout(){
         return "home";
     }
 }

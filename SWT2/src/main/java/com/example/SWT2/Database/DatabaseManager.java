@@ -211,23 +211,24 @@ public class DatabaseManager {
     public boolean userAdmin(User user){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select Rolle from User where vorname = '"+user.getVorname()+"' and nachname = '"+user.getNachname()+"' and password = '"+user.getPassword()+"';");
-        if(query.getSingleResult().toString() == "0")
+        Integer a = Integer.parseInt(query.getSingleResult().toString());
+        if(a == 0)
             return false;
-        return true;
+        else
+            return true;
     }
 
-    public ArrayList<Object> gebuchteReisenVonUser(String vorname, String nachname){
+    public List<Object[]> gebuchteReisenVonUser(String vorname, String nachname){
         Session s = sf.openSession();
         ArrayList<Object> aReise = new ArrayList<Object>();
-        String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis, b.Kosten from Reise r, Buchung b where b.usernr = (select usernr from user where vorname='"+vorname+"' and nachname='"+nachname+"';";
+        String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis, b.Kosten from Reise r, Buchung b where b.usernr = (select usernr from user where vorname='"+vorname+"' and nachname='"+nachname+"');";
         SQLQuery query = s.createSQLQuery(Ab);
         List<Object[]> l = query.list();
-        aReise.add(query.list());
         /*for(Object[] r : l){
             for(int i=0;i<7;i++)
                 System.out.println(r[i].toString()+"  ");
         }*/
-        return aReise;
+        return l;
     }
     //Unternhemen anhand von Parametern ausgeben
     //Reise anhand von Parametern ausgeben

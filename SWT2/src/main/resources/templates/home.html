@@ -3,73 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/flex.css">
-    <link rel="stylesheet" type="text/css" href="/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>Home</title>
 </head>
 <body class="grid-container">
-    <div th:switch= "${ar}">
-    <h1 th:case="null">Hallo User</h1>
-    <div th:case="*">
-        <div th:switch="${ar[0]}">
-            <h1 th:case="*" th:text="Hallo ${ar[0].vorname}"></h1>
-        </div>   
-    <header th:replace="fragments/header :: header"></header>
-    <nav>
-        <form action="." method="POST">
-            <input type="text"/>
-            Sortieren nach:
-            <select class="sort-options">
-                <option value="Ziel">Ziel</option>
-                <option value="Airline">Airline</option>
-                <option value="Hotel">Hotel</option>
-                <option value="Bewertung">Bewertung</option>
-            </select>
-            <select>
-                <option value="Aufsteigend">Aufsteigend</option>
-                <option value="Absteigend">Absteigend</option>
-            </select>
-            <button type="submit">
-                Suchen
-            </button>
-        </form>
-    </nav>
-    <main>
-        <div th:switch="${ar[1]}">
-            <h2 th:case="null">Keine Reisen gebucht</h2>
-            <div th:case="*">
-            <h2>Gebuchte Reisen</h2>
-            <table>
-                <thead>
-                    <th>Beschreibung</th>
-                    <th>Ort</th>
-                    <th>Region</th>
-                    <th>Land</th>
-                    <th>Von</th>
-                    <th>Bis</th>
-                    <th>Kosten</th>
-                </thead>
-                <thboy>
-                    <tr th:each="reis :${ar[1]}">
-                        <td th:text="${reis[0]}"></td>
-                        <td th:text="${reis[1]}"></td>
-                        <td th:text="${reis[2]}"></td>
-                        <td th:text="${reis[3]}"></td>
-                        <td th:text="${reis[4]}"></td>
-                        <td th:text="${reis[5]}"></td>
-                        <td th:text="${reis[6]}"></td>
-                    </tr>
-                </thboy>
-            </table>
+    <h1>Wilkommen auf Travelcation</h1>
+        <main>
+            <div th:switch="${ar}">
+                <div th:case="null">
+                    <form action="#" data-th-action="@{/login-form}" method="get">
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+                <div th:case="*">
+                    <div th:switch="${ar[0].rolle}">
+                        <div th:case="0">
+                            <h1 th:text="'Hallo '+${ar[0].vorname}"></h1>
+                            <h2 th:if="${#lists.isEmpty(ar[1])}">Es sind noch keine Reisen gebucht</h2>
+                            <div th:if="${not #lists.isEmpty(ar[1])}">
+                                <h2>Gebuchte Reisen</h2>
+                                        <table>
+                                            <thead>
+                                                <th>Beschreibung</th>
+                                                <th>Ort</th>
+                                                <th>Region</th>
+                                                <th>Land</th>
+                                                <th>Von</th>
+                                                <th>Bis</th>
+                                                <th>Kosten</th>
+                                            </thead>
+                                            <thboy>
+                                                <tr th:each="reis :${ar[1]}">
+                                                    <td th:text="${reis[0]}"></td>
+                                                    <td th:text="${reis[1]}"></td>
+                                                    <td th:text="${reis[2]}"></td>
+                                                    <td th:text="${reis[3]}"></td>
+                                                    <td th:text="${reis[4]}"></td>
+                                                    <td th:text="${reis[5]}"></td>
+                                                    <td th:text="${reis[6]}"></td>
+                                                </tr>
+                                            </thboy>
+                                        </table>
+                            </div>
+                        </div>
+                        <div th:case="1">
+                            <h1 th:text="'Hallo Admin '+${ar[0].vorname}"></h1>
+                        </div>
+                    </div>
+                    <form action="#" data-th-action="@{/logout}" method="post">
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </div>
-    </div>
-    </main>
-    <aside>
-        Aside 
-    </aside>
-    <footer th:replace="fragments/footer :: footer"></footer>
+            <nav>
+                <form action="#" data-th-action="@{/search}" method="POST">
+                    <button type="submit">Suchen</button>
+                </form>
+            </nav>
+        </main>    
 </body>
 </html>
