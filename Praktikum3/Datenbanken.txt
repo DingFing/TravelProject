@@ -7,13 +7,6 @@ DROP TABLE IF EXISTS Unternehmen;
 DROP TABLE IF EXISTS Urlaubsprofile;
 DROP TABLE IF EXISTS User;
 
-CREATE TABLE Buchung(
-    Buchungid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    Usernr INT(10) REFERENCES User(UserNr),
-    Reisenr INT(10) REFERENCES Reise(ReiseNr),
-    Von Date NOT NULL,
-    Bis Date NOT NULL
-);
 CREATE TABLE User(
     Usernr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Password VARCHAR(30) NOT NULL,
@@ -21,11 +14,30 @@ CREATE TABLE User(
     Vorname VARCHAR(20) NOT NULL,
     Nachname VARCHAR(20) NOT NULL,
     Rolle Integer(1) NOT NULL,
-    Kontonr INT(10) UNSIGNED NOT NULL
+    Kontonr INT(10) UNSIGNED NOT NULL,
+    UNIQUE KEY index_name (Vorname,Nachname)
 );
 CREATE TABLE Unternehmen(
     Kontonr INT(10) UNSIGNED NOT NULL,
     Unternehmenid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY 
+);
+CREATE TABLE Reise(
+    Reisenr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Beschreibung TEXT NOT NULL,
+    Ort VARCHAR(20) NOT NULL,
+    Region VARCHAR(20) NOT NULL,
+    Land VARCHAR(20) NOT NULL,
+    Preis DOUBLE(10,2) NOT NULL,
+    Jahreszeit VARCHAR(10) NOT NULL,
+    Unternehmenid INT(10) REFERENCES Unternehmen(UnternehmenID)
+);
+CREATE TABLE Buchung(
+    Buchungid INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    Usernr INT(10) REFERENCES User(UserNr),
+    Reisenr INT(10) REFERENCES Reise(ReiseNr),
+    Kosten DOUBLE(10,2) NOT NULL,
+    Von Date NOT NULL,
+    Bis Date NOT NULL
 );
 CREATE TABLE Aktivity(
     Anr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -40,16 +52,6 @@ CREATE TABLE Urlaubsprofile(
     Usernr INT(10) REFERENCES User(UserNr),
     Reisenr INT(10) REFERENCES Reise(ReiseNr),
     Name VARCHAR(20) NOT NULL
-);
-CREATE TABLE Reise(
-    Reisenr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    Beschreibung TEXT NOT NULL,
-    Ort VARCHAR(20) NOT NULL,
-    Region VARCHAR(20) NOT NULL,
-    Land VARCHAR(20) NOT NULL,
-    Preis DOUBLE(10,2) NOT NULL,
-    Jahreszeit VARCHAR(10) NOT NULL,
-    Unternehmenid INT(10) REFERENCES Unternehmen(UnternehmenID)
 );
 CREATE TABLE BietetAn(
     Bnr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

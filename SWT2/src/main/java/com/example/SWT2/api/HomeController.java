@@ -33,11 +33,13 @@ public class HomeController {
         if(db.userVorhanden(user.getVorname(), user.getNachname(), user.getPassword())){
             if(db.userAdmin(user)){     //Der User ist Admin
                 ArrayList<Object> ar = new ArrayList<Object>();
+                user.setRolle(1);
                 ar.add(user);
                 System.out.println("AdminAngemeldet");
                 return "adminhome";
             }else{                  //Normaler User Login erfolgreich
                 ArrayList<Object> ar = new ArrayList<Object>();
+                user.setRolle(0);
                 ar.add(user);
                 ar.add(db.gebuchteReisenVonUser(user));
                 model.addAttribute("Object",ar);

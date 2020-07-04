@@ -108,13 +108,15 @@ public class DatabaseManager {
         return AktivityNr;
     }
 
-    public Integer AddBuchung(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr, User UserNr){
+    public Integer AddBuchung(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr, User UserNr,Double Preis){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BuchungNr = null;
+        SQLQuery query = s.createSQLQuery("SELECT DATEDIFF('"+Bis+"', '"+Von+"') AS days;");
         try{
             tc = s.beginTransaction();
             Buchung buch = new Buchung();
+            buch.setPreis(ReiseNr.getPreis()* (Integer) query.getSingleResult());
             buch.setBis(Bis);
             buch.setVon(Von);
             buch.setReise(ReiseNr);
