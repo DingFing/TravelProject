@@ -9,6 +9,12 @@
     <title>Home</title>
 </head>
 <body class="grid-container">
+    <div th:switch= "${ar}">
+    <h1 th:case="null">Hallo User</h1>
+    <div th:case="*">
+        <div th:switch="${ar[0]}">
+            <h1 th:case="*" th:text="Hallo ${ar[0].vorname}"></h1>
+        </div>   
     <header th:replace="fragments/header :: header"></header>
     <nav>
         <form action="." method="POST">
@@ -30,7 +36,7 @@
         </form>
     </nav>
     <main>
-        <div th:switch="${reise}">
+        <div th:switch="${ar[1]}">
             <h2 th:case="null">Keine Reisen gebucht</h2>
             <div th:case="*">
             <h2>Gebuchte Reisen</h2>
@@ -45,7 +51,7 @@
                     <th>Kosten</th>
                 </thead>
                 <thboy>
-                    <tr th:each="reis :${reise}">
+                    <tr th:each="reis :${ar[1]}">
                         <td th:text="${reis[0]}"></td>
                         <td th:text="${reis[1]}"></td>
                         <td th:text="${reis[2]}"></td>
@@ -58,6 +64,8 @@
             </table>
             </div>
         </div>
+    </div>
+    </div>
     </main>
     <aside>
         Aside 

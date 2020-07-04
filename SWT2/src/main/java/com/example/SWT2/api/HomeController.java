@@ -38,9 +38,12 @@ public class HomeController {
                 System.out.println("AdminAngemeldet");
                 return "adminhome";
             }else{                          //Normaler User Login erfolgreich
+                ArrayList<Object> ar = new ArrayList<Object>();
+                ar.add(user);
+                ar.add(db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
                 user.setRolle(0);
                 session.setAttribute("user", user);
-                model.addAttribute("reise",db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+                model.addAttribute("ar",ar);
                 System.out.println("Angemeldet");
                 return "home";
             }
