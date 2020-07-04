@@ -17,8 +17,8 @@ public class Buchung {
     @Column(name = "Bis" , nullable = false)
     private java.sql.Date Bis;
 
-    @Column(name= "Preis", precision= 10, scale= 2, nullable= false)
-    private double Preis;
+    @Column(name= "Kosten", precision= 10, scale= 2, nullable= false)
+    private double Kosten;
 
     @ManyToOne
     @JoinColumn(name="Reisenr", nullable=false)
@@ -42,6 +42,6 @@ public class Buchung {
     public void setUser(User Usernr){this.Usernr= Usernr;}
     public User getUser(){return this.Usernr;}
 
-    public double getPreis(){return Preis;}
-    public void setPreis(double Preis){this.Preis= Preis;}
+    public double getPreis(){return Kosten;}
+    public void setPreis(double Kosten){this.Kosten= Kosten;}
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import com.example.SWT2.Database.Tables.User;
 import com.example.SWT2.Database.DatabaseManager;
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 public class HomeController {
@@ -27,26 +29,22 @@ public class HomeController {
     }
     // Log-in User
     @PostMapping("/login")
-    public String loginUser(@ModelAttribute User user, Model model){
-        //System.out.println("#########"+user.getNachname() + "##############" + user.getVorname() + "###############" + user.getPassword());
+    public String loginUser(@ModelAttribute User user, Model model, HttpSession session){
         DatabaseManager db = new DatabaseManager();
         if(db.userVorhanden(user.getVorname(), user.getNachname(), user.getPassword())){
-            if(db.userAdmin(user)){     //Der User ist Admin
-                ArrayList<Object> ar = new ArrayList<Object>();
+            if(db.userAdmin(user)){         //Der User ist Admin
                 user.setRolle(1);
-                ar.add(user);
+                session.setAttribute("user", user);
                 System.out.println("AdminAngemeldet");
                 return "adminhome";
-            }else{                  //Normaler User Login erfolgreich
-                ArrayList<Object> ar = new ArrayList<Object>();
+            }else{                          //Normaler User Login erfolgreich
                 user.setRolle(0);
-                ar.add(user);
-                ar.add(db.gebuchteReisenVonUser(user));
-                model.addAttribute("Object",ar);
+                session.setAttribute("user", user);
+                model.addAttribute("reise",db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
                 System.out.println("Angemeldet");
                 return "home";
             }
-        } else {                    //Anmeldung nicht erfolgreich
+        } else {                            //Anmeldung nicht erfolgreich
             System.out.println("Nicht Angemeldet");
             return "login";
         }
