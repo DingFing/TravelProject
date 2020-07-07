@@ -65,7 +65,7 @@ public class HomeController {
 
     // Register user in Database
     @PostMapping("/save-user")
-    public String outputData(@ModelAttribute User user){
+    public String saveUser(@ModelAttribute User user){
         DatabaseManager db = new DatabaseManager();
         db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), user.getKontoNr(), 0);
         return "home";

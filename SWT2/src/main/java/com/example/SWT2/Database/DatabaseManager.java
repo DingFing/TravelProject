@@ -64,26 +64,6 @@ public class DatabaseManager {
         return ReiseNr;
     }
 
-    public Integer AddUnternehmen(Integer KontoNr){
-        Session s = sf.openSession();
-        Transaction tc = null;
-        Integer UnternehmenNr = null;
-        try{
-            tc = s.beginTransaction();
-            Unternehmen un = new Unternehmen();
-            un.setKontoNr(KontoNr);
-            UnternehmenNr = (Integer) s.save(un);
-            tc.commit();
-        }
-        catch(HibernateException ex){
-            if(tc!= null) tc.rollback();
-            ex.printStackTrace();
-        }finally{
-            s.close();
-        }
-        return UnternehmenNr;
-    }
-
     public Integer AddAktivity(String Jahreszeit, String Beschreibung, double Kosten, Unternehmen UnternehmenId, Aktivity alternativ){
         Session s = sf.openSession();
         Transaction tc = null;
