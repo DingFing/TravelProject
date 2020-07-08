@@ -47,6 +47,9 @@
                         </div>
                         <div th:case="1">
                             <h1 th:text="'Hallo Admin '+${ar[0].vorname}"></h1>
+                            <div>
+                                Das sind die Optionen die ein Admin hat.
+                            </div>
                         </div>
                     </div>
                     <form action="#" data-th-action="@{/logout}" method="post">

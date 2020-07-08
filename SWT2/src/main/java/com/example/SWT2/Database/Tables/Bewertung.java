@@ -17,7 +17,7 @@ public class Bewertung {
 
     @ManyToOne
     @JoinColumn(name="Anr", nullable=false)
-    private Aktivity Anr;
+    private Aktivität Anr;
 
     @Column(name= "Bewertung" ,nullable= false)
     @Type(type= "text")
@@ -31,8 +31,8 @@ public class Bewertung {
     public double getNote(){return Note;}
     public void setNote(double Note){this.Note= Note;}
 
-    public Aktivity getANr(){return Anr;}
-    public void setANr(Aktivity Anr){this.Anr= Anr;}
+    public Aktivität getANr(){return Anr;}
+    public void setANr(Aktivität Anr){this.Anr= Anr;}
 
     public User getUserNr(){return Usernr;}
     public void setUserNr(User Usernr){this.Usernr= Usernr;}

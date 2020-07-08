@@ -14,12 +14,12 @@ public class BietetAn {
     private Reise Reisenr;
     @ManyToOne
     @JoinColumn(name="Anr", nullable=false)
-    private Aktivity Anr;
+    private Aktivität Anr;
 
     public Integer getBnr(){return Bnr;}
 
-    public void setANr(Aktivity Anr) { this.Anr = Anr;}
-    public Aktivity getANr(){return Anr;}
+    public void setANr(Aktivität Anr) { this.Anr = Anr;}
+    public Aktivität getANr(){return Anr;}
 
     public void setReiseNr(Reise Reisenr) { this.Reisenr = Reisenr; }
     public Reise getReiseNr(){return Reisenr;}

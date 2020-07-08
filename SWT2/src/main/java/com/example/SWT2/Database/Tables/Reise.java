@@ -30,14 +30,7 @@ public class Reise {
     @Column(name= "Jahreszeit", length= 10, nullable= false)
     private String Jahreszeit;
 
-    @ManyToOne
-    @JoinColumn(name="Unternehmenid", nullable=false)
-    private Unternehmen Unternehmenid;
-
     public Integer getReisenr(){return Reisenr;}
-    
-    public Unternehmen getUnternehmenId(){return Unternehmenid;}
-    public void setUnternehmenId(Unternehmen Unternehmenid){this.Unternehmenid= Unternehmenid;}
 
     public String getJahreszeit(){return Jahreszeit;}
     public void setJahreszeit(String Jahreszeit){this.Jahreszeit= Jahreszeit;}

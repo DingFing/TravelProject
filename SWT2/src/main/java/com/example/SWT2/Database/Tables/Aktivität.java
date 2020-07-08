@@ -5,8 +5,8 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "Aktivity")
-public class Aktivity {
+@Table(name = "Aktivität")
+public class Aktivität {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Anr" ,length = 10, nullable = false)
@@ -23,12 +23,8 @@ public class Aktivity {
     private double Kosten;
     
     @ManyToOne
-    @JoinColumn(name="UnternehmenId", nullable=false)
-    private Unternehmen Unternehmenid;
-    
-    @ManyToOne
     @JoinColumn(name="Alternativ", nullable=false)
-    private Aktivity Alternativ;
+    private Aktivität Alternativ;
 
     public Integer getAnr(){return Anr;}
     
@@ -41,9 +37,6 @@ public class Aktivity {
     public void setKosten(double Kosten){this.Kosten = Kosten;}
     public double getKosten(){return this.Kosten;}
 
-    public void setUnternehmen(Unternehmen Unternehmenid){this.Unternehmenid = Unternehmenid;}
-    public Unternehmen getUnternehmen(){return this.Unternehmenid;}
-
-    public void setAlternativ(Aktivity Alternativ){this.Alternativ = Alternativ;}
-    public Aktivity getAlternativ(){return this.Alternativ;}
+    public void setAlternativ(Aktivität Alternativ){this.Alternativ = Alternativ;}
+    public Aktivität getAlternativ(){return this.Alternativ;}
 }

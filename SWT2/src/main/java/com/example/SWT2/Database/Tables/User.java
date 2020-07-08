@@ -25,9 +25,6 @@ public class User {
     @Column(name = "Password" ,length = 30, nullable = false)
     private String Password;
 
-    @Column(name = "Kontonr" ,length = 10, nullable = false)
-    private Integer Kontonr;
-
     @Column(name= "Rolle" ,length= 1, nullable= false)
     private Integer Rolle; //0=User 1=Admin
 
@@ -41,9 +38,6 @@ public class User {
 
     public void setGeburtsDat(java.sql.Date Geburtsdat){this.Geburtsdat = Geburtsdat;}
     public java.sql.Date getGeburtsDat(){ return this.Geburtsdat; }
-
-    public void setKontoNr(Integer Kontonr){this.Kontonr = Kontonr;}
-    public Integer getKontoNr(){ return this.Kontonr; }
 
     public void setRolle(Integer Rolle){this.Rolle = Rolle;}
     public Integer getRolle(){ return this.Rolle; }

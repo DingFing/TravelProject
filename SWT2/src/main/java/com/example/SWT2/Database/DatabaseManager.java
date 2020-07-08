@@ -14,7 +14,7 @@ public class DatabaseManager {
     }
 
 
-    public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer KontoNr, Integer Rolle){
+    public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer Rolle){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer UserNr = null;
@@ -25,7 +25,6 @@ public class DatabaseManager {
             user.setVorname(Vorname);
             user.setGeburtsDat(GeburtsDat);
             user.setPassword(Password);
-            user.setKontoNr(KontoNr);
             user.setRolle(Rolle);
             UserNr = (Integer) s.save(user);
             tc.commit();
@@ -64,18 +63,17 @@ public class DatabaseManager {
         return ReiseNr;
     }
 
-    public Integer AddAktivity(String Jahreszeit, String Beschreibung, double Kosten, Unternehmen UnternehmenId, Aktivity alternativ){
+    public Integer AddAktivität(String Jahreszeit, String Beschreibung, double Kosten,Aktivität alternativ){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer AktivityNr = null;
         try{
             tc = s.beginTransaction();
-            Aktivity ak = new Aktivity();
+            Aktivität ak = new Aktivität();
             ak.setAlternativ(alternativ);
             ak.setBeschreibung(Beschreibung);
             ak.setJahreszeit(Jahreszeit);
             ak.setKosten(Kosten);
-            ak.setUnternehmen(UnternehmenId);
             AktivityNr= (Integer) s.save(ak);
             tc.commit();
         }
@@ -135,7 +133,7 @@ public class DatabaseManager {
         return UrlaubsprofilNr;
     }
 
-    public Integer AddBewertung(User UserNr, Aktivity ANr, String Bewertung, double Note){
+    public Integer AddBewertung(User UserNr, Aktivität ANr, String Bewertung, double Note){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BewertungNr = null;
@@ -158,7 +156,7 @@ public class DatabaseManager {
         return BewertungNr;
     }
 
-    public Integer AddReiseBietetAnAktivity(Reise ReiseNr, Aktivity ANr){
+    public Integer AddReiseBietetAnAktivity(Reise ReiseNr, Aktivität ANr){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BANr = null;
