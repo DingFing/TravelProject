@@ -5,6 +5,7 @@
     <title>Registrierung</title>
 </head>
 <body>
+    <a th:href="@{/}"><h1>Wilkommen auf Travelcation</h1></a>
     <form th:action="@{/save-user}" th:object="${User}" method="post">
         <div>
             <label>Nachname</label>

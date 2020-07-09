@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body class="grid-container">
+    <a th:href="@{/}"><h1>Wilkommen auf Travelcation</h1></a>
+        <main>
+            <div th:switch="${user}">
+                <div th:case="0">
+                    <h2 th:if="${#lists.isEmpty(reise)}">Kein Reise gefunden</h2>
+                        <div th:if="${not #lists.isEmpty(reise)}">
+                            <h2>Gebuchte Reisen</h2>
+                                <table>
+                                    <thead>
+                                        <th>Beschreibung</th>
+                                        <th>Ort</th>
+                                        <th>Region</th>
+                                        <th>Land</th>
+                                        <th>Von</th>
+                                        <th>Bis</th>
+                                        <th>Kosten</th>
+                                    </thead>
+                                    <thboy>
+                                        <tr th:each="reis :${reise}">
+                                            <td th:text="${reis[0]}"></td>
+                                            <td th:text="${reis[1]}"></td>
+                                            <td th:text="${reis[2]}"></td>
+                                            <td th:text="${reis[3]}"></td>
+                                            <td th:text="${reis[4]}"></td>
+                                            <td th:text="${reis[5]}"></td>
+                                            <td th:text="${reis[6]}"></td>
+                                        </tr>
+                                    </thboy>
+                                </table>
+                        </div>
+                        <form action="#" data-th-action="@{/login-form}" method="get">
+                            <button type="submit">Login</button>
+                        </form>
+                        <form data-th-action="@{/register-form}" method="get">
+                            <button type="submit">Registrieren</button>
+                        </form>
+                </div>
+                <div th:case="*">
+                    <h1 th:text="'Hallo '+${user.vorname}"></h1>
+                    <h2 th:if="${#lists.isEmpty(reise)}">Keine Reise gefunden</h2>
+                        <div th:if="${not #lists.isEmpty(reise)}">
+                                <table>
+                                    <thead>
+                                        <th>Beschreibung</th>
+                                        <th>Ort</th>
+                                        <th>Region</th>
+                                        <th>Land</th>
+                                        <th>Von</th>
+                                        <th>Bis</th>
+                                        <th>Kosten</th>
+                                    </thead>
+                                    <thboy>
+                                        <tr th:each="reis :${reise}">
+                                            <td th:text="${reis[0]}"></td>
+                                            <td th:text="${reis[1]}"></td>
+                                            <td th:text="${reis[2]}"></td>
+                                            <td th:text="${reis[3]}"></td>
+                                            <td th:text="${reis[4]}"></td>
+                                            <td th:text="${reis[5]}"></td>
+                                            <td th:text="${reis[6]}"></td>
+                                        </tr>
+                                    </thboy>
+                                </table>
+                        </div>
+                        <form th:action="@{/reiseBuchen}" th:object="${Suchanfrage}" method="get">
+                            <select th:field="*{option}">
+                                <option th:each="i : ${reisenr}" th:value="${i}" th:text="${i}"></option>
+                            </select>
+                            <div>
+                                <input type="date" th:field="*{von}">
+                                <input type="date" th:field="*{bis}">
+                            </div>
+                            <button type="submit">Reise buchen</button>
+                        </form>
+                        <form action="#" th:action="@{/logout}" method="get">
+                            <button type="submit">Logout</button>
+                        </form>
+                </div>
+            </div>
+        </main>    
+</body>
+</html>

@@ -9,39 +9,36 @@ import java.util.ArrayList;
 import com.example.SWT2.Database.Tables.User;
 import com.example.SWT2.Database.DatabaseManager;
 import javax.servlet.http.HttpSession;
-
+import com.*;
+import java.util.Arrays;
 
 @Controller
 public class HomeController {
     
-    
     // Homepage
     @GetMapping("/")
     public String gotoHomepage(HttpSession session, Model model){
-        if(session.getAttribute("user") != null){
-            DatabaseManager db = new DatabaseManager();
-            User us = (User) session.getAttribute("user");
-            if(db.userVorhanden(us.getVorname(), us.getNachname(), us.getPassword())){
-                if(db.userAdmin(us) == true){         //Der User ist Admin
-                    session.setAttribute("user", us);
-                    ArrayList<Object> ar = new ArrayList<Object>();
-                    ar.add(us);
-                    model.addAttribute("ar", ar);
-                    System.out.println("AdminAngemeldet");
+            if(session.getAttribute("user") != null){
+                DatabaseManager db = new DatabaseManager();
+                User us = (User) session.getAttribute("user");
+                    if(db.userAdmin(us) == true){         //Der User ist Admin
+                        model.addAttribute("user", us);
+                        model.addAttribute("reise", 0);
+                        return "home";
+                    }
+                    else{                          //Normaler User Login erfolgreich
+                        ArrayList<Object> ar = new ArrayList<Object>();
+                        model.addAttribute("user",us);
+                        model.addAttribute("reise", db.gebuchteReisenVonUser(us.getVorname(), us.getNachname()));
+                        model.addAttribute("Suchanfrage", new Suchanfrage());
+                        return "home";
+                    }
+                }
+                else{
+                    model.addAttribute("user",1);
+                    model.addAttribute("Suchanfrage", new Suchanfrage());
                     return "home";
                 }
-                else{                          //Normaler User Login erfolgreich
-                    ArrayList<Object> ar = new ArrayList<Object>();
-                    session.setAttribute("user", us);
-                    ar.add(us);
-                    ar.add(db.gebuchteReisenVonUser(us.getVorname(), us.getNachname()));
-                    model.addAttribute("ar",ar);
-                    System.out.println("Angemeldet");
-                    return "home";
-                }
-            }
-        }
-        return "home";
     }
     // Open Login-Form
     @GetMapping("/login-form")
@@ -57,25 +54,22 @@ public class HomeController {
             if(db.userAdmin(user) == true){         //Der User ist Admin
                 user.setRolle(1);
                 session.setAttribute("user", user);
-                ArrayList<Object> ar = new ArrayList<Object>();
-                ar.add(user);
-                model.addAttribute("ar", ar);
-                System.out.println("AdminAngemeldet");
+                model.addAttribute("user", user);
+                model.addAttribute("reise",0);
                 return "home";
             }
             else{                          //Normaler User Login erfolgreich
-                ArrayList<Object> ar = new ArrayList<Object>();
                 user.setRolle(0);
                 session.setAttribute("user", user);
-                ar.add(user);
-                ar.add(db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
-                model.addAttribute("ar",ar);
-                System.out.println("Angemeldet");
+                model.addAttribute("user", user);
+                model.addAttribute("reise",db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+                model.addAttribute("Suchanfrage", new Suchanfrage());
                 return "home";
             }
         } 
         else{                            //Anmeldung nicht erfolgreich
-            System.out.println("Nicht Angemeldet");
+            model.addAttribute("user", 0);
+            model.addAttribute("Suchanfrage", new Suchanfrage());
             return "home";
         }
     }
@@ -95,8 +89,11 @@ public class HomeController {
         return "home";
     }
 
-    @PostMapping("/logout")
-    public String logout(){
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Model model){
+        session.removeAttribute("user");
+        model.addAttribute("user", 1);
+        model.addAttribute("Suchanfrage", new Suchanfrage());
         return "home";
     }
 }
