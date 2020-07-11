@@ -63,7 +63,7 @@ public class DatabaseManager {
         return ReiseNr;
     }
 
-    public Integer AddAktivität(String Jahreszeit, String Beschreibung, double Kosten,Aktivität alternativ){
+    public Integer AddAktivität(String Beschreibung,Aktivität alternativ){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer AktivityNr = null;
@@ -72,8 +72,6 @@ public class DatabaseManager {
             Aktivität ak = new Aktivität();
             ak.setAlternativ(alternativ);
             ak.setBeschreibung(Beschreibung);
-            ak.setJahreszeit(Jahreszeit);
-            ak.setKosten(Kosten);
             AktivityNr= (Integer) s.save(ak);
             tc.commit();
         }
@@ -84,6 +82,28 @@ public class DatabaseManager {
             s.close();
         }
         return AktivityNr;
+    }
+
+    public Integer AddBewertung(User UserNr, Aktivität ANr, String Bewertung){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        Integer BewertungNr = null;
+        try{
+            tc = s.beginTransaction();
+            Bewertung bewert = new Bewertung();
+            bewert.setUserNr(UserNr);
+            bewert.setANr(ANr);
+            bewert.setBewertung(Bewertung);
+            BewertungNr= (Integer) s.save(bewert);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally{
+            s.close();
+        }
+        return BewertungNr;
     }
 
     public Integer AddBuchung1(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr, User UserNr,Double Preis){
@@ -135,6 +155,21 @@ public class DatabaseManager {
         }
         return user;
     }
+
+    public Aktivität getAktivitätbyId(int id){
+        Session s = sf.openSession();
+        Aktivität aa = null;
+        try{
+            aa = (Aktivität) s.get(Aktivität.class, id);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            s.close();
+        }
+        return aa;
+    }
     public Integer AddUrlaubsprofil(Integer ProfilNr, User UserNr, Reise ReiseNr, String name){
         Session s = sf.openSession();
         Transaction tc = null;
@@ -155,29 +190,6 @@ public class DatabaseManager {
             s.close();
         }
         return UrlaubsprofilNr;
-    }
-
-    public Integer AddBewertung(User UserNr, Aktivität ANr, String Bewertung, double Note){
-        Session s = sf.openSession();
-        Transaction tc = null;
-        Integer BewertungNr = null;
-        try{
-            tc = s.beginTransaction();
-            Bewertung bew = new Bewertung();
-            bew.setANr(ANr);
-            bew.setUserNr(UserNr);
-            bew.setBewertung(Bewertung);
-            bew.setNote(Note);
-            BewertungNr= (Integer) s.save(bew);
-            tc.commit();
-        }
-        catch(HibernateException ex){
-            if(tc!= null) tc.rollback();
-            ex.printStackTrace();
-        }finally{
-            s.close();
-        }
-        return BewertungNr;
     }
 
     public Integer AddReiseBietetAnAktivity(Reise ReiseNr, Aktivität ANr){
@@ -221,25 +233,50 @@ public class DatabaseManager {
 
     public List<Object[]> gebuchteReisenVonUser(String vorname, String nachname){
         Session s = sf.openSession();
-        String Ab = "Select r.Beschreibung,r.Ort,r.Region,r.Land,b.Von, b.Bis, b.Kosten from Reise r, Buchung b where b.usernr = (select usernr from user where vorname='"+vorname+"' and nachname='"+nachname+"') and r.reisenr = b.reisenr;";
+        String Ab = "Select r.Reisenr, r.Beschreibung, r.Ort, r.Region, r.Land, b.Von, b.Bis, b.Kosten from Reise r, Buchung b where b.usernr = (select usernr from user where vorname='"+vorname+"' and nachname='"+nachname+"') and r.reisenr = b.reisenr;";
         SQLQuery query = s.createSQLQuery(Ab);
-        List<Object[]> l = query.list();
-        /*for(Object[] r : l){
-            for(int i=0;i<7;i++)
-                System.out.println(r[i].toString()+"  ");
+        List<Object []> l = query.list();
+        List<Object[]> ret = new ArrayList<Object[]>();
+        for(Object[] r : l){
+            SQLQuery query1 = s.createSQLQuery("Select a.Anr, a.Beschreibung from Aktivität a, bietetan bi where bi.Reisenr = "+r[0]+" and a.Anr = bi.Anr");
+            Object [] t = new Object[9];
+            for(int i=0;i<r.length;i++){
+                t[i] = r[i];
+            }
+            t[8] = query1.list();
+            ret.add(t);
+        }
+        /*for(int y=0;y<ret.size();y++){
+            for(int i=0;i<8;i++)
+                System.out.print(ret.get(y)[i]+"  ");
+                System.out.println();
+                System.out.println("Das ist ein neues Objekt");
+                List<Object[]> q = (List<Object[]>) ret.get(y)[8];
+                for(Object[] z: q){
+                    for(int g=0;g<z.length;g++){
+                        System.out.print(z[g]+" ");
+                    }
+                    System.out.println();
+            }
         }*/
-        return l;
+        return ret;
     }
-    public  List<ArrayList> SuchReisen(String option, String suche){
+    public  List<Object []> SuchReisen(String option, String suche){
         Session s = sf.openSession();
         String Ab = "Select * from Reise where "+option+" = '"+suche+"'";
         SQLQuery query = s.createSQLQuery(Ab);
-        List<ArrayList> l = query.list();
-        /*for(ArrayList r : l){
-            SQLQuery query1 = s.createSQLQuery("Select a.Beschreibung from Aktivität a, bietetan bi, where bi.Reisenr = '"+r.get(0)+"' and a.Anr = bi.Anr");
-            r.add(7,query1.list());
-        }*/
-        return l;
+        List<Object []> l = query.list();
+        List<Object[]> ret = new ArrayList<Object[]>();
+        for(Object[] r : l){
+            SQLQuery query1 = s.createSQLQuery("Select a.Anr, a.Beschreibung from Aktivität a, bietetan bi where bi.Reisenr = "+r[0]+" and a.Anr = bi.Anr");
+            Object [] t = new Object[9];
+            for(int i=0;i<r.length;i++){
+                t[i] = r[i];
+            }
+            t[8] = query1.list();
+            ret.add(t);
+        }
+        return ret;
     }
 
     public  List<ArrayList> SuchReisennr(String option, String suche){
@@ -247,10 +284,6 @@ public class DatabaseManager {
         String Ab = "Select Reisenr from Reise where "+option+" = '"+suche+"'";
         SQLQuery query = s.createSQLQuery(Ab);
         List<ArrayList> l = query.list();
-        /*for(ArrayList r : l){
-            SQLQuery query1 = s.createSQLQuery("Select a.Beschreibung from Aktivität a, bietetan bi, where bi.Reisenr = '"+r.get(0)+"' and a.Anr = bi.Anr");
-            r.add(7,query1.list());
-        }*/
         return l;
     }
     public double getPreisvonReise(int reisenr){
@@ -263,12 +296,14 @@ public class DatabaseManager {
         SQLQuery query = s.createSQLQuery("Select usernr from user where vorname = '"+vorname+"' and nachname = '"+nachname+"'");
         return Integer.parseInt(query.getSingleResult().toString());
     }
-    public void AddBuchung(java.sql.Date von, java.sql.Date bis,int reisenr, int usernr,Double preis){
+    public List<Object []> getNochNichtBewerteteAktivitätenVonUser(String vorname, String nachname){
         Session s = sf.openSession();
-        String abf = "INSERT INTO Buchung (usernr,reisenr,kosten,von,bis) VALUES ("+usernr+","+reisenr+","+"'"+preis+"','"+von+"','"+bis+"')";
-        System.out.println("Line 246      : "+abf);
-        SQLQuery query = s.createSQLQuery(abf);
-        System.out.println("Hallo"+query.getSingleResult().toString());
+        SQLQuery query = s.createSQLQuery("Select DISTINCT bi.Anr from bietetan bi, buchung b where b.Reisenr = bi.Reisenr and bi.Anr NOT IN(Select be.Anr from bewertung be where be.Usernr = (Select usernr from user where vorname = '"+vorname+"' and nachname = '"+nachname+"'));");
+        List<Object []> li = query.list();
+        return li;
+    }
+    public String[] getBewertungfürAktivität(){             //Noch machen
+        return null;
     }
     //Unternhemen anhand von Parametern ausgeben
     //Reise anhand von Parametern ausgeben

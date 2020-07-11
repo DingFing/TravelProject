@@ -1,3 +1,7 @@
+DROP SCHEMA SWT2_DATABASE;
+CREATE SCHEMA SWT2_DATABASE;
+USE SWT2_DATABASE;
+
 DROP TABLE IF EXISTS Aktivität;
 DROP TABLE IF EXISTS Bewertung;
 DROP TABLE IF EXISTS BietetAn;
@@ -52,6 +56,29 @@ CREATE TABLE Bewertung(
     Bewertungnr INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     Usernr INT(10) REFERENCES User(UserNr),
     Anr INT(10) REFERENCES Aktivität(ANr),
-    Bewertung TEXT NOT NULL,
-    Note Double(1,1) NOT NULL
+    Bewertung TEXT NOT NULL
 );
+
+
+
+
+#Daten einfügen
+INSERT INTO User VALUES (1,"abc","1998-06-21","Max","Mustermann",0);
+INSERT INTO User VALUES (2,"abc","1998-06-21","Fritz","Mustermann",0);
+INSERT INTO User VALUES (3,"abc","1998-06-21","Malte","Scheuer",1);
+
+INSERT INTO Reise VALUES (1,"ErsteReise","Dortmund","NRW","Deutschland",100.0, "Sommer");
+INSERT INTO Reise VALUES (2,"ZweiteReise","Essen","NRW","Deutschland",200.0, "Sommer");
+INSERT INTO Reise VALUES (3,"DritteReise","Duisburg","NRW","Deutschland",300.0, "Sommer");
+INSERT INTO Reise VALUES (4,"VierteReise","München","Bayern","Deutschland",400.0, "Winter");
+
+
+INSERT INTO Aktivität VALUES (1,"1 Aktivität",null);
+INSERT INTO Aktivität VALUES (2,"2 Aktivität",1);
+INSERT INTO Aktivität VALUES (3,"3 Aktivität",1);
+
+INSERT INTO bietetan VALUES (1,1,1);
+INSERT INTO bietetan VALUES (2,1,2);
+INSERT INTO bietetan VALUES (3,1,3);
+
+INSERT INTO Buchung VALUES (1,1,1,100.0,"2020-06-20","2020-06-27");

@@ -27,10 +27,12 @@ public class HomeController {
                         return "home";
                     }
                     else{                          //Normaler User Login erfolgreich
-                        ArrayList<Object> ar = new ArrayList<Object>();
                         model.addAttribute("user",us);
                         model.addAttribute("reise", db.gebuchteReisenVonUser(us.getVorname(), us.getNachname()));
                         model.addAttribute("Suchanfrage", new Suchanfrage());
+                        Suchanfrage eins = new Suchanfrage();
+                        eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(us.getVorname(), us.getNachname()));
+                        model.addAttribute("Suchanfrage1", eins);
                         return "home";
                     }
                 }
@@ -64,6 +66,9 @@ public class HomeController {
                 model.addAttribute("user", user);
                 model.addAttribute("reise",db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
                 model.addAttribute("Suchanfrage", new Suchanfrage());
+                Suchanfrage eins = new Suchanfrage();
+                eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
+                model.addAttribute("Suchanfrage1", eins);
                 return "home";
             }
         } 

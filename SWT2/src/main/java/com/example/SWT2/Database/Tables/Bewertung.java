@@ -23,13 +23,7 @@ public class Bewertung {
     @Type(type= "text")
     private String Bewertung;
 
-    @Column(name= "Note", precision= 1, scale= 1, nullable= false)
-    private double Note;
-
     public Integer getBewertungnr(){return Bewertungnr;}
-
-    public double getNote(){return Note;}
-    public void setNote(double Note){this.Note= Note;}
 
     public Aktivität getANr(){return Anr;}
     public void setANr(Aktivität Anr){this.Anr= Anr;}

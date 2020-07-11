@@ -1,8 +1,11 @@
 package com;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Suchanfrage {
+    private List<Object[]> strar;
     private String suche;
     private String option;
     private java.sql.Date von;
@@ -19,4 +22,7 @@ public class Suchanfrage {
 
     public java.sql.Date getBis(){ return bis;}
     public void setBis(java.sql.Date bis){this.bis = bis;}
+
+    public List<Object[]> getStrar(){return strar;}
+    public void setStrar(List<Object[]> strar){this.strar = strar;}
 }

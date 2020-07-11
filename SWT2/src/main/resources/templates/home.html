@@ -64,6 +64,7 @@
                                 <h2>Gebuchte Reisen</h2>
                                     <table>
                                         <thead>
+                                            <th>ReiseID</th>
                                             <th>Beschreibung</th>
                                             <th>Ort</th>
                                             <th>Region</th>
@@ -81,13 +82,35 @@
                                                 <td th:text="${reis[4]}"></td>
                                                 <td th:text="${reis[5]}"></td>
                                                 <td th:text="${reis[6]}"></td>
+                                                <td th:text="${reis[7]}"></td>
+                                                <div th:if="${not #lists.isEmpty(reis[8])}">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr th:each="akti : ${reis[8]}">
+                                                                <td th:text="${akti[0]}"></td>
+                                                                <td th:text="${akti[1]}"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>    
+                                                </div>
                                             </tr>
                                         </thboy>
                                     </table>
                             </div>
-                            <form action="#" th:action="@{/profil-create}" method="get">
-                                <button type="submit">Reiseprofil erstellen</button>
-                            </form>
+                            <div th:if="${#lists.isEmpty(Suchanfrage1.strar)}">
+                                <h3>Alle Aktiväten die Sie gebucht haben, haben Sie bewertet.</h3>
+                            </div>
+                            <div th:if="${not #lists.isEmpty(Suchanfrage1.strar)}">
+                                <form action="#" th:action="@{/BewertAktivität}" th:object="${Suchanfrage1}" method="POST">
+                                    Aktivität-Bewerten:<select th:field="*{option}">
+                                            <option th:each="i: ${Suchanfrage1.strar}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    <div>
+                                        <input type="text" th:field="*{suche}">
+                                    </div>
+                                    <button type="submit">Bewerten</button>
+                                </form>
+                            </div>
                             <form th:action="@{/anzReise}" th:object="${Suchanfrage}" method="get">
                                 <select th:field="*{option}">
                                     <option th:value="Jahreszeit">Jahreszeit</option>
