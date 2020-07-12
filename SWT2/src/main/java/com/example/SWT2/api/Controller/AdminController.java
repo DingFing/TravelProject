@@ -12,7 +12,7 @@ import com.example.SWT2.Database.DatabaseManager;
 import javax.servlet.http.HttpSession;
 import com.*;
 import java.util.Arrays;
-
+import com.example.SWT2.api.Object.*;
 import org.springframework.stereotype.Controller;
 
 @Controller

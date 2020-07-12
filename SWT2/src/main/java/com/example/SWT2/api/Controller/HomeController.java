@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import net.bytebuddy.matcher.ModifierMatcher.Mode;
-
+import com.example.SWT2.api.Object.*;
 import java.util.ArrayList;
 import com.example.SWT2.Database.Tables.*;
 import com.example.SWT2.Database.DatabaseManager;
