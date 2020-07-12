@@ -22,31 +22,32 @@ import com.example.SWT2.api.Object.*;
 @Controller
 public class ReiseController {
     @PostMapping("/anzReise")
-    public String ReiseAnzeigen(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage,HttpSession session, Model model){
+    public String reiseAnzeigen(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage,HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
         if(session.getAttribute("user") != null){
             model.addAttribute("user", session.getAttribute("user"));
-            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reise", db.suchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage0", new Suchanfrage());
-            model.addAttribute("reisenr", db.SuchReisennr(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reisenr", db.suchReisennr(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage1", new Suchanfrage());
             model.addAttribute("Bewertung",0);
-            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("AID", db.getAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
             session.setAttribute("such", suchanfrage);
             return "AnzReise";
         }
         else{
             model.addAttribute("user",0);
-            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reise", db.suchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage1", new Suchanfrage());
-            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("AID", db.getAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Bewertung",0);
             session.setAttribute("such", suchanfrage);
             return "AnzReise";
         }
     }
+
     @PostMapping("/reiseBuchen")
-    public String buchen(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
+    public String reiseBuchen(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
         if(session.getAttribute("user") != null){
             User user = (User) session.getAttribute("user");
@@ -57,7 +58,7 @@ public class ReiseController {
             double preis = c*db.getPreisvonReise(Integer.parseInt(suchanfrage.getOption()));
             int usernr = db.getUsernr(user.getVorname(), user.getNachname());
             int reisenr = Integer.parseInt(suchanfrage.getOption());
-            db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(),db.getReisebyId(reisenr), db.getUserbyId(usernr), preis);
+            db.addBuchung1(suchanfrage.getVon(), suchanfrage.getBis(),db.getReisebyId(reisenr), db.getUserbyId(usernr), preis);
             }
 
             model.addAttribute("user",user);
@@ -74,21 +75,22 @@ public class ReiseController {
         }
         else{
             model.addAttribute("user",0);
-            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reise", db.suchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage1", new Suchanfrage());
-            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("AID", db.getAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Bewertung",0);
             session.setAttribute("such", suchanfrage);
             return "AnzReise";
         }
     }
+
     @PostMapping("/BewertAktivität")
-    public String BewertAktivität(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
+    public String bewertAktivität(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
         if(session.getAttribute("user") != null){
             User user = (User) session.getAttribute("user");
             int usernr = db.getUsernr(user.getVorname(), user.getNachname());
-            db.AddBewertung(db.getUserbyId(usernr),db.getAktivitätbyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
+            db.addBewertung(db.getUserbyId(usernr),db.getAktivitätbyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
 
 
             model.addAttribute("user",user);
@@ -105,9 +107,9 @@ public class ReiseController {
         }
         else{
             model.addAttribute("user",0);
-            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reise", db.suchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage1", new Suchanfrage());
-            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("AID", db.getAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Bewertung",0);
             session.setAttribute("such", suchanfrage);
             return "AnzReise";
@@ -115,15 +117,15 @@ public class ReiseController {
     }
 
     @PostMapping("/ZeigBewertung")
-    public String ZeitBewert(@ModelAttribute("Suchanfrage1") Suchanfrage s1, Model model, HttpSession session){
+    public String zeitBewertung(@ModelAttribute("Suchanfrage1") Suchanfrage s1, Model model, HttpSession session){
         DatabaseManager db = new DatabaseManager();
         if(session.getAttribute("user") != null){
             Suchanfrage suchanfrage = (Suchanfrage) session.getAttribute("such");
             model.addAttribute("user", session.getAttribute("user"));
-            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reise", db.suchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage0", new Suchanfrage());
-            model.addAttribute("reisenr", db.SuchReisennr(suchanfrage.getOption(), suchanfrage.getSuche()));
-            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reisenr", db.suchReisennr(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("AID", db.getAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage1", new Suchanfrage());
             List<Object[]> ll = db.getBewertungbyTd(s1.getOption());
             model.addAttribute("Bewertung",ll);
@@ -132,8 +134,8 @@ public class ReiseController {
         else{
             Suchanfrage suchanfrage = (Suchanfrage) session.getAttribute("such");
             model.addAttribute("user",0);
-            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
-            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("reise", db.suchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("AID", db.getAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
             model.addAttribute("Suchanfrage1", new Suchanfrage());;
             List<Object[]> ll = db.getBewertungbyTd(s1.getOption());
             model.addAttribute("Bewertung",ll);

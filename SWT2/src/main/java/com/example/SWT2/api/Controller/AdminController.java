@@ -17,10 +17,6 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class AdminController {
-
-
-
-
     //Alle Nuitzer anzeigen 
     //Form machen mit Dropdown mit UserId und mit Input 0 oder 1
     //Reise neu erstellen
@@ -29,7 +25,7 @@ public class AdminController {
     @PostMapping("/UserÄndern")
     public String UserAnzeigen(@ModelAttribute("Suchanfrage4") Suchanfrage suchanfrage,HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
-        db.SetRolleByUserId(Integer.parseInt(suchanfrage.getOption()), Integer.parseInt(suchanfrage.getSuche()));
+        db.setRolleByUserId(Integer.parseInt(suchanfrage.getOption()), Integer.parseInt(suchanfrage.getSuche()));
 
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -43,10 +39,11 @@ public class AdminController {
         model.addAttribute("Reisenr", db.getAllReiseId());
         return "home";
     }
+
     @PostMapping("/ReiseHinzu")
-    public String ReisenHinzufügen(@ModelAttribute Reise reise,HttpSession session, Model model){
+    public String reisenHinzufügen(@ModelAttribute Reise reise,HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
-        db.AddReise(reise.getBeschreibung(), reise.getOrt(), reise.getRegion(), reise.getLand(), reise.getPreis(), reise.getJahreszeit());
+        db.addReise(reise.getBeschreibung(), reise.getOrt(), reise.getRegion(), reise.getLand(), reise.getPreis(), reise.getJahreszeit());
 
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -60,10 +57,11 @@ public class AdminController {
         model.addAttribute("Reisenr", db.getAllReiseId());
         return "home";
     }
+
     @PostMapping("/AktivtätErstellen") //Noch machen
-    public String AktitivätHizu(@ModelAttribute Aktivität aktiv, HttpSession session, Model model){
+    public String aktitivätHinzufügen(@ModelAttribute Aktivität aktiv, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
-        db.AddAktivität(aktiv.getBeschreibung());
+        db.addAktivität(aktiv.getBeschreibung());
 
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
@@ -79,7 +77,7 @@ public class AdminController {
     }
     
     @PostMapping("/AktivtätZuReiseHinzu") //Noch machen
-    public String AktivtätZuReiseHinzu(@ModelAttribute("Suchanfrage5") Suchanfrage suchanfrage, HttpSession session, Model model){
+    public String aktivitätZuReiseHinzufügen(@ModelAttribute("Suchanfrage5") Suchanfrage suchanfrage, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
         db.addBietetan(db.getAktivitätbyId(Integer.parseInt(suchanfrage.getSuche())), db.getReisebyId(Integer.parseInt(suchanfrage.getOption())));
 

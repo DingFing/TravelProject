@@ -57,12 +57,14 @@ public class HomeController {
                     return "home";
                 }
     }
+
     // Open Login-Form
     @PostMapping("/login-form")
     public String createLoginForm(Model model) {
         model.addAttribute("User", new User());
         return "login";
     }
+
     // Log-in User
     @PostMapping("/login")
     public String loginUser(@ModelAttribute User user, Model model, HttpSession session){
@@ -135,13 +137,14 @@ public class HomeController {
         model.addAttribute("Suchanfrage0", new Suchanfrage());
         return "home";
     }
+    
     @PostMapping("/ErstellProfil")
-    public String ProfilErstellung(@ModelAttribute("Suchanfrage2") Suchanfrage suchanfrage, HttpSession session, Model model){
+    public String createProfile(@ModelAttribute("Suchanfrage2") Suchanfrage suchanfrage, HttpSession session, Model model){
         if(session.getAttribute("user") != null){
             DatabaseManager db = new DatabaseManager();
             User user = (User) session.getAttribute("user");
             int usernr = db.getUsernr(user.getVorname(), user.getNachname());
-            db.AddUrlaubsprofil(db.getUserbyId(usernr),db.getReisebyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
+            db.addUrlaubsprofil(db.getUserbyId(usernr),db.getReisebyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
             model.addAttribute("user",user);
             model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
             model.addAttribute("Suchanfrage0", new Suchanfrage());
@@ -160,8 +163,9 @@ public class HomeController {
             return "home";
         }
     }
+
     @PostMapping("ReiseBuchenMitProfil")
-    public String ReiseBuchenProfil(@ModelAttribute("Suchanfrage3") Suchanfrage suchanfrage, HttpSession session , Model model){
+    public String reiseBuchenProfil(@ModelAttribute("Suchanfrage3") Suchanfrage suchanfrage, HttpSession session , Model model){
         if(session.getAttribute("user") != null){
             DatabaseManager db = new DatabaseManager();
             User user = (User) session.getAttribute("user");
@@ -171,7 +175,7 @@ public class HomeController {
             int usernr = db.getUsernr(user.getVorname(), user.getNachname());
             int reisenr = db.getReisebyProfilId(suchanfrage.getOption());
             double preis = c*db.getPreisvonReise(reisenr);
-            db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(), db.getReisebyId(reisenr),db.getUserbyId(usernr), preis);
+            db.addBuchung1(suchanfrage.getVon(), suchanfrage.getBis(), db.getReisebyId(reisenr),db.getUserbyId(usernr), preis);
             
             
             

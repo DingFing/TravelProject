@@ -13,8 +13,6 @@ public class DatabaseManager {
         sf = new Configuration().configure().buildSessionFactory();
     }
 
-
-
     public Integer addBietetan(Aktivität anr, Reise reisenr){
         Session s = sf.openSession();
         Transaction tc = null;
@@ -35,6 +33,7 @@ public class DatabaseManager {
         }
         return BietetAnnr;
     }
+
     public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer Rolle){
         Session s = sf.openSession();
         Transaction tc = null;
@@ -59,7 +58,7 @@ public class DatabaseManager {
         return UserNr;
     }
 
-    public Integer AddReise(String Beschreibung, String Ort, String Region, String Land,Double Preis, String Jahreszeit){
+    public Integer addReise(String Beschreibung, String Ort, String Region, String Land,Double Preis, String Jahreszeit){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer ReiseNr = null;
@@ -84,7 +83,7 @@ public class DatabaseManager {
         return ReiseNr;
     }
 
-    public Integer AddAktivität(String Beschreibung){
+    public Integer addAktivität(String Beschreibung){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer AktivityNr = null;
@@ -104,7 +103,7 @@ public class DatabaseManager {
         return AktivityNr;
     }
 
-    public Integer AddBewertung(User UserNr, Aktivität ANr, String Bewertung){
+    public Integer addBewertung(User UserNr, Aktivität ANr, String Bewertung){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BewertungNr = null;
@@ -126,7 +125,7 @@ public class DatabaseManager {
         return BewertungNr;
     }
 
-    public Integer AddBuchung1(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr, User UserNr,Double Preis){
+    public Integer addBuchung1(java.sql.Date Von, java.sql.Date Bis, Reise ReiseNr, User UserNr,Double Preis){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BuchungNr = null;
@@ -149,6 +148,7 @@ public class DatabaseManager {
         }
         return BuchungNr;
     }
+
     public Reise getReisebyId(int id){
         Session s = sf.openSession();
         Reise reise = null;
@@ -162,6 +162,7 @@ public class DatabaseManager {
         }
         return reise;
     }
+
     public User getUserbyId(int id){
         Session s = sf.openSession();
         User user = null;
@@ -190,7 +191,8 @@ public class DatabaseManager {
         }
         return aa;
     }
-    public Integer AddUrlaubsprofil(User UserNr, Reise ReiseNr, String name){
+
+    public Integer addUrlaubsprofil(User UserNr, Reise ReiseNr, String name){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer UrlaubsprofilNr = null;
@@ -212,7 +214,7 @@ public class DatabaseManager {
         return UrlaubsprofilNr;
     }
 
-    public Integer AddReiseBietetAnAktivity(Reise ReiseNr, Aktivität ANr){
+    public Integer addReiseBietetAnAktivity(Reise ReiseNr, Aktivität ANr){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer BANr = null;
@@ -232,6 +234,7 @@ public class DatabaseManager {
         }
         return BANr;
     }
+
     public boolean userVorhanden(String vorname, String nachname, String password){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select * from User where vorname = '"+vorname+"' and nachname = '"+nachname+"' and password = '"+password+"'");
@@ -282,7 +285,7 @@ public class DatabaseManager {
         return ret;
     }
 
-    public  List<Object []> SuchReisen(String option, String suche){
+    public  List<Object []> suchReisen(String option, String suche){
         Session s = sf.openSession();
         String Ab = "Select * from Reise where "+option+" = '"+suche+"'";
         SQLQuery query = s.createSQLQuery(Ab);
@@ -299,55 +302,64 @@ public class DatabaseManager {
         }
         return ret;
     }
+
     public List<Object[]> gebuchteReiseId(String vorname, String nachname){
         Session s = sf.openSession();
         String Ab = "Select DISTINCT r.Reisenr from Reise r, Buchung b where b.usernr = (select usernr from user where vorname='"+vorname+"' and nachname='"+nachname+"') and r.reisenr = b.reisenr;";
         SQLQuery query = s.createSQLQuery(Ab);
         return query.list();
     }
-    public List<Object[]> GetAktivitäten(String option, String suche){
+
+    public List<Object[]> getAktivitäten(String option, String suche){
         Session s = sf.openSession();
         String Ab = "Select Distinct Anr from bietetan where Reisenr IN (Select Reisenr from Reise where "+option+" = '"+suche+"');";
         SQLQuery query = s.createSQLQuery(Ab);
         return query.list();
     }
 
-    public  List<Object[]> SuchReisennr(String option, String suche){
+    public  List<Object[]> suchReisennr(String option, String suche){
         Session s = sf.openSession();
         String Ab = "Select Reisenr from Reise where "+option+" = '"+suche+"'";
         SQLQuery query = s.createSQLQuery(Ab);
         return query.list();
     }
+
     public double getPreisvonReise(int reisenr){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select Preis from Reise where Reisenr = "+reisenr);
         return Double.parseDouble(query.getSingleResult().toString());
     }
+
     public int getUsernr(String vorname, String nachname){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select usernr from user where vorname = '"+vorname+"' and nachname = '"+nachname+"'");
         return Integer.parseInt(query.getSingleResult().toString());
     }
+
     public List<Object []> getNochNichtBewerteteAktivitätenVonUser(String vorname, String nachname){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select DISTINCT bi.Anr from bietetan bi, buchung b where b.Reisenr = bi.Reisenr and bi.Anr NOT IN(Select be.Anr from bewertung be where be.Usernr = (Select usernr from user where vorname = '"+vorname+"' and nachname = '"+nachname+"'));");
         return query.list();
     }
+
     public List<Object[]> getBewertungbyTd(String AktivätId){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select Bewertung from bewertung where Anr = "+Integer.parseInt(AktivätId));
         return query.list();
     }
+
     public List<Object[]> getProfilNamen(String vorname, String nachname){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select u.name from Urlaubsprofile u where Usernr = (Select Usernr from user where Vorname = '"+vorname+"' and nachname = '"+nachname+"')");
         return query.list();
     }
+
     public Integer getReisebyProfilId(String name){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select Reisenr from Urlaubsprofile where Profilnr = (Select Profilnr from Urlaubsprofile where name = '"+name+"');");
         return Integer.parseInt(query.getSingleResult().toString());
     }
+
     public List<Object[]> showAlleUser(){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select usernr,geburtsdat,vorname,nachname,rolle from User");
@@ -359,12 +371,14 @@ public class DatabaseManager {
         }*/
         return a;
     }
+
     public List<Object[]> showAllUserID(){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select Usernr from User ORDER BY usernr;");
         return query.list();
     }
-    public void SetRolleByUserId(int id, int rolle){
+
+    public void setRolleByUserId(int id, int rolle){
         Session s = sf.openSession();
         Transaction tc = null;
         try{
@@ -381,11 +395,13 @@ public class DatabaseManager {
             s.close();
         }
     }
+
     public List<Object[]> getAllAktivtyId(){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select Anr from Aktivität ORDER BY Anr;");
         return query.list();
     }
+
     public List<Object[]> getAllReiseId(){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select ReiseNr from Reise ORDER BY ReiseNr;");
