@@ -48,45 +48,67 @@ public class ReiseController {
     @PostMapping("/reiseBuchen")
     public String buchen(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
-        int a = suchanfrage.getVon().getYear()*365 + suchanfrage.getVon().getMonth()*30 + suchanfrage.getVon().getDay();
-        int b = suchanfrage.getBis().getYear()*365 + suchanfrage.getBis().getMonth()*30 + suchanfrage.getBis().getDay();
-        double c = b-a;
-        double preis = c*db.getPreisvonReise(Integer.parseInt(suchanfrage.getOption()));
-        User user = (User) session.getAttribute("user");
-        int usernr = db.getUsernr(user.getVorname(), user.getNachname());
-        int reisenr = Integer.parseInt(suchanfrage.getOption());
-        db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(),db.getReisebyId(reisenr), db.getUserbyId(usernr), preis);
-        model.addAttribute("user",user);
-        model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage0", new Suchanfrage());
-        Suchanfrage eins = new Suchanfrage();
-        eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage1", eins);
-        model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage2", new Suchanfrage());
-        model.addAttribute("Suchanfrage3", new Suchanfrage());
-        model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
-        return "home";
+        if(session.getAttribute("user") != null){
+            int a = suchanfrage.getVon().getYear()*365 + suchanfrage.getVon().getMonth()*30 + suchanfrage.getVon().getDay();
+            int b = suchanfrage.getBis().getYear()*365 + suchanfrage.getBis().getMonth()*30 + suchanfrage.getBis().getDay();
+            double c = b-a;
+            double preis = c*db.getPreisvonReise(Integer.parseInt(suchanfrage.getOption()));
+            User user = (User) session.getAttribute("user");
+            int usernr = db.getUsernr(user.getVorname(), user.getNachname());
+            int reisenr = Integer.parseInt(suchanfrage.getOption());
+            db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(),db.getReisebyId(reisenr), db.getUserbyId(usernr), preis);
+            model.addAttribute("user",user);
+            model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage0", new Suchanfrage());
+            Suchanfrage eins = new Suchanfrage();
+            eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage1", eins);
+            model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage2", new Suchanfrage());
+            model.addAttribute("Suchanfrage3", new Suchanfrage());
+            model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
+            return "home";
+        }
+        else{
+            model.addAttribute("user",0);
+            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("Suchanfrage1", new Suchanfrage());
+            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("Bewertung",0);
+            session.setAttribute("such", suchanfrage);
+            return "AnzReise";
+        }
     }
     @PostMapping("/BewertAktivität")
     public String BewertAktivität(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
-        User user = (User) session.getAttribute("user");
-        int usernr = db.getUsernr(user.getVorname(), user.getNachname());
-        db.AddBewertung(db.getUserbyId(usernr),db.getAktivitätbyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
+        if(session.getAttribute("user") != null){
+            User user = (User) session.getAttribute("user");
+            int usernr = db.getUsernr(user.getVorname(), user.getNachname());
+            db.AddBewertung(db.getUserbyId(usernr),db.getAktivitätbyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
 
 
-        model.addAttribute("user",user);
-        model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage0", new Suchanfrage());
-        Suchanfrage eins = new Suchanfrage();
-        eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage1", eins);
-        model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage2", new Suchanfrage());
-        model.addAttribute("Suchanfrage3", new Suchanfrage());
-        model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
-        return "home";
+            model.addAttribute("user",user);
+            model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage0", new Suchanfrage());
+            Suchanfrage eins = new Suchanfrage();
+            eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage1", eins);
+            model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage2", new Suchanfrage());
+            model.addAttribute("Suchanfrage3", new Suchanfrage());
+            model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
+            return "home";
+        }
+        else{
+            model.addAttribute("user",0);
+            model.addAttribute("reise", db.SuchReisen(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("Suchanfrage1", new Suchanfrage());
+            model.addAttribute("AID", db.GetAktivitäten(suchanfrage.getOption(), suchanfrage.getSuche()));
+            model.addAttribute("Bewertung",0);
+            session.setAttribute("such", suchanfrage);
+            return "AnzReise";
+        }
     }
 
     @PostMapping("/ZeigBewertung")

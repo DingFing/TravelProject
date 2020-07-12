@@ -113,48 +113,60 @@ public class HomeController {
     }
     @PostMapping("/ErstellProfil")
     public String ProfilErstellung(@ModelAttribute("Suchanfrage2") Suchanfrage suchanfrage, HttpSession session, Model model){
-        DatabaseManager db = new DatabaseManager();
-        User user = (User) session.getAttribute("user");
-        int usernr = db.getUsernr(user.getVorname(), user.getNachname());
-        db.AddUrlaubsprofil(db.getUserbyId(usernr),db.getReisebyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
-        
-        
-        model.addAttribute("user",user);
-        model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage0", new Suchanfrage());
-        Suchanfrage eins = new Suchanfrage();
-        eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage1", eins);
-        model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage2", new Suchanfrage());
-        model.addAttribute("Suchanfrage3", new Suchanfrage());
-        model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
-        return "home";
+        if(session.getAttribute("user") != null){
+            DatabaseManager db = new DatabaseManager();
+            User user = (User) session.getAttribute("user");
+            int usernr = db.getUsernr(user.getVorname(), user.getNachname());
+            db.AddUrlaubsprofil(db.getUserbyId(usernr),db.getReisebyId(Integer.parseInt(suchanfrage.getOption())), suchanfrage.getSuche());
+            model.addAttribute("user",user);
+            model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage0", new Suchanfrage());
+            Suchanfrage eins = new Suchanfrage();
+            eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage1", eins);
+            model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage2", new Suchanfrage());
+            model.addAttribute("Suchanfrage3", new Suchanfrage());
+            model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
+            return "home";
+        }
+        else{
+            model.addAttribute("user", 0);
+            model.addAttribute("Suchanfrage0", new Suchanfrage());
+            return "home";
+        }
     }
     @PostMapping("ReiseBuchenMitProfil")
     public String ReiseBuchenProfil(@ModelAttribute("Suchanfrage3") Suchanfrage suchanfrage, HttpSession session , Model model){
-        DatabaseManager db = new DatabaseManager();
-        User user = (User) session.getAttribute("user");
-        int a = suchanfrage.getVon().getYear()*365 + suchanfrage.getVon().getMonth()*30 + suchanfrage.getVon().getDay();
-        int b = suchanfrage.getBis().getYear()*365 + suchanfrage.getBis().getMonth()*30 + suchanfrage.getBis().getDay();
-        double c = b-a;
-        int usernr = db.getUsernr(user.getVorname(), user.getNachname());
-        int reisenr = db.getReisebyProfilId(suchanfrage.getOption());
-        double preis = c*db.getPreisvonReise(reisenr);
-        db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(), db.getReisebyId(reisenr),db.getUserbyId(usernr), preis);
-        
-        
-        
-        model.addAttribute("user",user);
-        model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage0", new Suchanfrage());
-        Suchanfrage eins = new Suchanfrage();
-        eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage1", eins);
-        model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
-        model.addAttribute("Suchanfrage2", new Suchanfrage());
-        model.addAttribute("Suchanfrage3", new Suchanfrage());
-        model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
-        return "home";
+        if(session.getAttribute("user") != null){
+            DatabaseManager db = new DatabaseManager();
+            User user = (User) session.getAttribute("user");
+            int a = suchanfrage.getVon().getYear()*365 + suchanfrage.getVon().getMonth()*30 + suchanfrage.getVon().getDay();
+            int b = suchanfrage.getBis().getYear()*365 + suchanfrage.getBis().getMonth()*30 + suchanfrage.getBis().getDay();
+            double c = b-a;
+            int usernr = db.getUsernr(user.getVorname(), user.getNachname());
+            int reisenr = db.getReisebyProfilId(suchanfrage.getOption());
+            double preis = c*db.getPreisvonReise(reisenr);
+            db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(), db.getReisebyId(reisenr),db.getUserbyId(usernr), preis);
+            
+            
+            
+            model.addAttribute("user",user);
+            model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage0", new Suchanfrage());
+            Suchanfrage eins = new Suchanfrage();
+            eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage1", eins);
+            model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
+            model.addAttribute("Suchanfrage2", new Suchanfrage());
+            model.addAttribute("Suchanfrage3", new Suchanfrage());
+            model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
+            return "home";
+        }
+        else{
+            model.addAttribute("user", 0);
+            model.addAttribute("Suchanfrage0", new Suchanfrage());
+            return "home";
+        }
     }
 }

@@ -19,7 +19,17 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class AdminController {
- 
+
+
+
+
+    //Alle Nuitzer anzeigen 
+    //Form machen mit Dropdown mit UserId und mit Input 0 oder 1
+    //Reise neu erstellen
+    //Aktivitäten neu erstellen
+    //Aktivität Reise hinzufügen
+    
+    
     @PostMapping("/UserÄndern")
     public String UserAnzeigen(HttpSession session, Model model){
         User user = (User) session.getAttribute("user");
