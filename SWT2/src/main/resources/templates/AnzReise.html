@@ -82,6 +82,7 @@
                                 </thboy>
                             </table>
                         </div>
+                        <h3>Reise buchen</h3>
                         <form th:action="@{/reiseBuchen}" th:object="${Suchanfrage0}" method="POST">
                             ReiseNr: <select th:field="*{option}">
                                 <option th:each="i : ${reisenr}" th:value="${i}" th:text="${i}"></option>
@@ -92,11 +93,9 @@
                             </div>
                             <button type="submit">Reise buchen</button>
                         </form>
-                        <form action="#" th:action="@{/logout}" method="POST">
-                            <button type="submit">Logout</button>
-                        </form>
                 </div>
                 <form th:action="@{/ZeigBewertung}" method="post" th:object="${Suchanfrage1}">
+                    <h3>Aktitvät Bewertungen</h3>
                     Aktivität:<select th:field="*{option}">
                         <option th:each="i: ${AID}" th:value="${i}" th:text="${i}"></option>
                     </select>
@@ -113,6 +112,9 @@
                         </div>
                     </div>
                 </div>
+                <form action="#" th:action="@{/logout}" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
             </div>
         </main>    
 </body>
