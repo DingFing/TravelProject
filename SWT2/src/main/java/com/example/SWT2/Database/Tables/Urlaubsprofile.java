@@ -4,7 +4,7 @@ package com.example.SWT2.Database.Tables;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Aktivity")
+@Table(name = "Urlaubsprofile")
 public class Urlaubsprofile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

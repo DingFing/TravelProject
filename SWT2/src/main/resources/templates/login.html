@@ -6,7 +6,7 @@
 </head>
 <body>
     <a th:href="@{/}"><h1>Wilkommen auf Travelcation</h1></a>
-    <form th:action="@{/login}" th:object="${User}" method="post">
+    <form th:action="@{/login}" th:object="${User}" method="POST">
         <div>
             <label>Nachname</label>
             <input type="text" maxlength="20" size="20" th:field="*{Nachname}">

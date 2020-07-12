@@ -11,13 +11,13 @@
             <div th:switch="${user}">
                 <div th:case="0">
                     Login erfolglos
-                    <form action="#" data-th-action="@{/login-form}" method="get">
+                    <form action="#" data-th-action="@{/login-form}" method="POST">
                         <button type="submit">Login</button>
                     </form>
-                    <form data-th-action="@{/register-form}" method="get">
+                    <form data-th-action="@{/register-form}" method="POST">
                         <button type="submit">Registrieren</button>
                     </form>
-                    <form th:action="@{/anzReise}" th:object="${Suchanfrage}" method="get">
+                    <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
                         <select th:field="*{option}">
                             <option th:value="Jahreszeit">Jahreszeit</option>
                             <option th:value="Ort">Ort</opttion>
@@ -30,13 +30,13 @@
                     </form>
                 </div>
                 <div th:case="1">
-                    <form action="#" data-th-action="@{/login-form}" method="get">
+                    <form action="#" data-th-action="@{/login-form}" method="POST">
                         <button type="submit">Login</button>
                     </form>
-                    <form data-th-action="@{/register-form}" method="get">
+                    <form data-th-action="@{/register-form}" method="POST">
                         <button type="submit">Registrieren</button>
                     </form>
-                    <form th:action="@{/anzReise}" th:object="${Suchanfrage}" method="get">
+                    <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
                         <select th:field="*{option}">
                             <option th:value="Jahreszeit">Jahreszeit</option>
                             <option th:value="Ort">Ort</opttion>
@@ -111,7 +111,7 @@
                                     <button type="submit">Bewerten</button>
                                 </form>
                             </div>
-                            <form th:action="@{/anzReise}" th:object="${Suchanfrage}" method="get">
+                            <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
                                 <select th:field="*{option}">
                                     <option th:value="Jahreszeit">Jahreszeit</option>
                                     <option th:value="Ort">Ort</opttion>
@@ -124,9 +124,32 @@
                             </form>
                         </div>
                     </div>
-                    <form action="#" th:action="@{/logout}" method="get">
+                    <form action="#" th:action="@{/logout}" method="POST">
                         <button type="submit">Logout</button>
                     </form>
+                    <form action="#" th:action="@{/ErstellProfil}" th:object="${Suchanfrage2}" method="POST">
+                        ReiseNr: <select th:field="*{option}">
+                                    <option th:each="i : ${GebuReis}" th:value="${i}" th:text="${i}"></option>
+                                </select>
+                                <div>
+                                    ProfilName: <input type="text" th:field="*{suche}">
+                                </div>
+                        </select>
+                        <button type="submit">Reiseprofil erstellen</button>
+                    </form>
+                    <div  th:if="${#lists.isEmpty(Profilnamen)}">
+
+                    </div>
+                    <div th:if="${not #lists.isEmpty(Profilnamen)}">
+                        <form action="#" th:action="@{/ReiseBuchenMitProfil}" th:object="${Suchanfrage3}"method="POST">
+                            <select th:field="*{option}">
+                                <option th:each="i : ${Profilnamen}" th:value="${i}" th:text="${i}"></option>
+                                <input type="date" th:field="*{von}">
+                                <input type="date" th:field="*{bis}">
+                            </select>
+                            <button type="submit">Reise buchen mit Vorlage</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </main>    

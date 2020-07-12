@@ -170,7 +170,7 @@ public class DatabaseManager {
         }
         return aa;
     }
-    public Integer AddUrlaubsprofil(Integer ProfilNr, User UserNr, Reise ReiseNr, String name){
+    public Integer AddUrlaubsprofil(User UserNr, Reise ReiseNr, String name){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer UrlaubsprofilNr = null;
@@ -261,6 +261,7 @@ public class DatabaseManager {
         }*/
         return ret;
     }
+
     public  List<Object []> SuchReisen(String option, String suche){
         Session s = sf.openSession();
         String Ab = "Select * from Reise where "+option+" = '"+suche+"'";
@@ -269,22 +270,33 @@ public class DatabaseManager {
         List<Object[]> ret = new ArrayList<Object[]>();
         for(Object[] r : l){
             SQLQuery query1 = s.createSQLQuery("Select a.Anr, a.Beschreibung from Aktivität a, bietetan bi where bi.Reisenr = "+r[0]+" and a.Anr = bi.Anr");
-            Object [] t = new Object[9];
+            Object [] t = new Object[8];
             for(int i=0;i<r.length;i++){
                 t[i] = r[i];
             }
-            t[8] = query1.list();
+            t[7] = query1.list();
             ret.add(t);
         }
         return ret;
     }
+    public List<Object[]> gebuchteReiseId(String vorname, String nachname){
+        Session s = sf.openSession();
+        String Ab = "Select DISTINCT r.Reisenr from Reise r, Buchung b where b.usernr = (select usernr from user where vorname='"+vorname+"' and nachname='"+nachname+"') and r.reisenr = b.reisenr;";
+        SQLQuery query = s.createSQLQuery(Ab);
+        return query.list();
+    }
+    public List<Object[]> GetAktivitäten(String option, String suche){
+        Session s = sf.openSession();
+        String Ab = "Select Distinct Anr from bietetan where Reisenr IN (Select Reisenr from Reise where "+option+" = '"+suche+"');";
+        SQLQuery query = s.createSQLQuery(Ab);
+        return query.list();
+    }
 
-    public  List<ArrayList> SuchReisennr(String option, String suche){
+    public  List<Object[]> SuchReisennr(String option, String suche){
         Session s = sf.openSession();
         String Ab = "Select Reisenr from Reise where "+option+" = '"+suche+"'";
         SQLQuery query = s.createSQLQuery(Ab);
-        List<ArrayList> l = query.list();
-        return l;
+        return query.list();
     }
     public double getPreisvonReise(int reisenr){
         Session s = sf.openSession();
@@ -299,11 +311,22 @@ public class DatabaseManager {
     public List<Object []> getNochNichtBewerteteAktivitätenVonUser(String vorname, String nachname){
         Session s = sf.openSession();
         SQLQuery query = s.createSQLQuery("Select DISTINCT bi.Anr from bietetan bi, buchung b where b.Reisenr = bi.Reisenr and bi.Anr NOT IN(Select be.Anr from bewertung be where be.Usernr = (Select usernr from user where vorname = '"+vorname+"' and nachname = '"+nachname+"'));");
-        List<Object []> li = query.list();
-        return li;
+        return query.list();
     }
-    public String[] getBewertungfürAktivität(){             //Noch machen
-        return null;
+    public List<Object[]> getBewertungbyTd(String AktivätId){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select Bewertung from bewertung where Anr = "+Integer.parseInt(AktivätId));
+        return query.list();
+    }
+    public List<Object[]> getProfilNamen(String vorname, String nachname){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select u.name from Urlaubsprofile u where Usernr = (Select Usernr from user where Vorname = '"+vorname+"' and nachname = '"+nachname+"')");
+        return query.list();
+    }
+    public Integer getReisebyProfilId(String name){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select Reisenr from Urlaubsprofile where Profilnr = (Select Profilnr from Urlaubsprofile where name = '"+name+"');");
+        return Integer.parseInt(query.getSingleResult().toString());
     }
     //Unternhemen anhand von Parametern ausgeben
     //Reise anhand von Parametern ausgeben
