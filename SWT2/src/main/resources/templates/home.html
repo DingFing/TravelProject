@@ -17,7 +17,7 @@
                     <form data-th-action="@{/register-form}" method="POST">
                         <button type="submit">Registrieren</button>
                     </form>
-                    <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
+                    Reise suchen: <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
                         <select th:field="*{option}">
                             <option th:value="Jahreszeit">Jahreszeit</option>
                             <option th:value="Ort">Ort</opttion>
@@ -36,7 +36,7 @@
                     <form data-th-action="@{/register-form}" method="POST">
                         <button type="submit">Registrieren</button>
                     </form>
-                    <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
+                    Reise suchen:  <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
                         <select th:field="*{option}">
                             <option th:value="Jahreszeit">Jahreszeit</option>
                             <option th:value="Ort">Ort</opttion>
@@ -193,7 +193,7 @@
                                     <button type="submit">Bewerten</button>
                                 </form>
                             </div>
-                            <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
+                            Reise suchen: <form th:action="@{/anzReise}" th:object="${Suchanfrage0}" method="POST">
                                 <select th:field="*{option}">
                                     <option th:value="Jahreszeit">Jahreszeit</option>
                                     <option th:value="Ort">Ort</opttion>

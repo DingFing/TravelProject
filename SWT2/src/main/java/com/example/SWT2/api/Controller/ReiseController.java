@@ -49,14 +49,17 @@ public class ReiseController {
     public String buchen(@ModelAttribute("Suchanfrage0") Suchanfrage suchanfrage, HttpSession session, Model model){
         DatabaseManager db = new DatabaseManager();
         if(session.getAttribute("user") != null){
+            User user = (User) session.getAttribute("user");
+            if(suchanfrage.getOption() != null){
             int a = suchanfrage.getVon().getYear()*365 + suchanfrage.getVon().getMonth()*30 + suchanfrage.getVon().getDay();
             int b = suchanfrage.getBis().getYear()*365 + suchanfrage.getBis().getMonth()*30 + suchanfrage.getBis().getDay();
             double c = b-a;
             double preis = c*db.getPreisvonReise(Integer.parseInt(suchanfrage.getOption()));
-            User user = (User) session.getAttribute("user");
             int usernr = db.getUsernr(user.getVorname(), user.getNachname());
             int reisenr = Integer.parseInt(suchanfrage.getOption());
             db.AddBuchung1(suchanfrage.getVon(), suchanfrage.getBis(),db.getReisebyId(reisenr), db.getUserbyId(usernr), preis);
+            }
+
             model.addAttribute("user",user);
             model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
             model.addAttribute("Suchanfrage0", new Suchanfrage());
