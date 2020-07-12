@@ -112,16 +112,26 @@ public class HomeController {
     }
 
     @PostMapping("/save-user")
-    public String saveUser(@ModelAttribute User user){
+    public String saveUser(@ModelAttribute User user, Model model){
         DatabaseManager db = new DatabaseManager();
         db.adduser(user.getNachname(), user.getVorname(), user.getGeburtsDat(), user.getPassword(), 0);
+        model.addAttribute("user",user);
+        model.addAttribute("reise", db.gebuchteReisenVonUser(user.getVorname(), user.getNachname()));
+        model.addAttribute("Suchanfrage0", new Suchanfrage());
+        Suchanfrage eins = new Suchanfrage();
+        eins.setStrar(db.getNochNichtBewerteteAktivitätenVonUser(user.getVorname(), user.getNachname()));
+        model.addAttribute("Suchanfrage1", eins);
+        model.addAttribute("GebuReis", db.gebuchteReiseId(user.getVorname(), user.getNachname()));
+        model.addAttribute("Suchanfrage2", new Suchanfrage());
+        model.addAttribute("Suchanfrage3", new Suchanfrage());
+        model.addAttribute("Profilnamen", db.getProfilNamen(user.getVorname(), user.getNachname()));
         return "home";
     }
 
     @PostMapping("/logout")
     public String logout(HttpSession session, Model model){
         session.removeAttribute("user");
-        model.addAttribute("user", 1);
+        model.addAttribute("user",1);
         model.addAttribute("Suchanfrage0", new Suchanfrage());
         return "home";
     }
