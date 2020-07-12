@@ -27,7 +27,7 @@ public class Reise {
     @Column(name= "Preis", precision= 10, scale= 2, nullable= false)
     private double Preis;
 
-    @Column(name= "Jahreszeit", length= 10, nullable= false)
+    @Column(name= "Jahreszeit", length= 20, nullable= false)
     private String Jahreszeit;
 
     public Integer getReisenr(){return Reisenr;}

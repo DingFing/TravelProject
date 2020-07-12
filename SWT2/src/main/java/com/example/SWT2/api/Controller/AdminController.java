@@ -5,11 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import net.bytebuddy.matcher.ModifierMatcher.Mode;
-
 import java.util.ArrayList;
-import com.example.SWT2.Database.Tables.User;
+import com.example.SWT2.Database.Tables.*;
 import com.example.SWT2.Database.DatabaseManager;
 import javax.servlet.http.HttpSession;
 import com.*;
@@ -28,28 +26,73 @@ public class AdminController {
     //Reise neu erstellen
     //Aktivitäten neu erstellen
     //Aktivität Reise hinzufügen
-    
-    
     @PostMapping("/UserÄndern")
-    public String UserAnzeigen(HttpSession session, Model model){
+    public String UserAnzeigen(@ModelAttribute("Suchanfrage4") Suchanfrage suchanfrage,HttpSession session, Model model){
+        DatabaseManager db = new DatabaseManager();
+        db.SetRolleByUserId(Integer.parseInt(suchanfrage.getOption()), Integer.parseInt(suchanfrage.getSuche()));
+
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-        model.addAttribute("reise", 0);
+        model.addAttribute("users", db.showAlleUser());
+        model.addAttribute("userid", db.showAllUserID());
+        model.addAttribute("Suchanfrage4", new Suchanfrage());
+        model.addAttribute("reisse", new Reise());
+        model.addAttribute("aktiv", new Aktivität());
+        model.addAttribute("Suchanfrage5", new Suchanfrage());
+        model.addAttribute("Anr", db.getAllAktivtyId());
+        model.addAttribute("Reisenr", db.getAllReiseId());
         return "home";
     }
     @PostMapping("/ReiseHinzu")
-    public String ReisenHinzufügen(HttpSession session, Model model){
+    public String ReisenHinzufügen(@ModelAttribute Reise reise,HttpSession session, Model model){
+        DatabaseManager db = new DatabaseManager();
+        db.AddReise(reise.getBeschreibung(), reise.getOrt(), reise.getRegion(), reise.getLand(), reise.getPreis(), reise.getJahreszeit());
+
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-        model.addAttribute("reise", 0);
+        model.addAttribute("users", db.showAlleUser());
+        model.addAttribute("userid", db.showAllUserID());
+        model.addAttribute("Suchanfrage4", new Suchanfrage());
+        model.addAttribute("reisse", new Reise());
+        model.addAttribute("aktiv", new Aktivität());
+        model.addAttribute("Suchanfrage5", new Suchanfrage());
+        model.addAttribute("Anr", db.getAllAktivtyId());
+        model.addAttribute("Reisenr", db.getAllReiseId());
         return "home";
     }
-    @PostMapping("/AktivtätHinzu")
-    public String AktitivätHizu(HttpSession session, Model model){
+    @PostMapping("/AktivtätErstellen") //Noch machen
+    public String AktitivätHizu(@ModelAttribute Aktivität aktiv, HttpSession session, Model model){
+        DatabaseManager db = new DatabaseManager();
+        db.AddAktivität(aktiv.getBeschreibung());
+
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-        model.addAttribute("reise", 0);
+        model.addAttribute("users", db.showAlleUser());
+        model.addAttribute("userid", db.showAllUserID());
+        model.addAttribute("Suchanfrage4", new Suchanfrage());
+        model.addAttribute("reisse", new Reise());
+        model.addAttribute("aktiv", new Aktivität());
+        model.addAttribute("Suchanfrage5", new Suchanfrage());
+        model.addAttribute("Anr", db.getAllAktivtyId());
+        model.addAttribute("Reisenr", db.getAllReiseId());
         return "home"; 
     }
     
+    @PostMapping("/AktivtätZuReiseHinzu") //Noch machen
+    public String AktivtätZuReiseHinzu(@ModelAttribute("Suchanfrage5") Suchanfrage suchanfrage, HttpSession session, Model model){
+        DatabaseManager db = new DatabaseManager();
+        db.addBietetan(db.getAktivitätbyId(Integer.parseInt(suchanfrage.getSuche())), db.getReisebyId(Integer.parseInt(suchanfrage.getOption())));
+
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
+        model.addAttribute("users", db.showAlleUser());
+        model.addAttribute("userid", db.showAllUserID());
+        model.addAttribute("Suchanfrage4", new Suchanfrage());
+        model.addAttribute("reisse", new Reise());
+        model.addAttribute("aktiv", new Aktivität());
+        model.addAttribute("Suchanfrage5", new Suchanfrage());
+        model.addAttribute("Anr", db.getAllAktivtyId());
+        model.addAttribute("Reisenr", db.getAllReiseId());
+        return "home"; 
+    }
 }

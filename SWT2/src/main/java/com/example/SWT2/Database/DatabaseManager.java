@@ -14,6 +14,27 @@ public class DatabaseManager {
     }
 
 
+
+    public Integer addBietetan(Aktivität anr, Reise reisenr){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        Integer BietetAnnr = null;
+        try{
+            tc = s.beginTransaction();
+            BietetAn an = new BietetAn();
+            an.setANr(anr);
+            an.setReiseNr(reisenr);
+            BietetAnnr = (Integer) s.save(an);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally {
+            s.close();
+        }
+        return BietetAnnr;
+    }
     public Integer adduser(String Nachname, String Vorname, java.sql.Date GeburtsDat, String Password, Integer Rolle){
         Session s = sf.openSession();
         Transaction tc = null;
@@ -63,14 +84,13 @@ public class DatabaseManager {
         return ReiseNr;
     }
 
-    public Integer AddAktivität(String Beschreibung,Aktivität alternativ){
+    public Integer AddAktivität(String Beschreibung){
         Session s = sf.openSession();
         Transaction tc = null;
         Integer AktivityNr = null;
         try{
             tc = s.beginTransaction();
             Aktivität ak = new Aktivität();
-            ak.setAlternativ(alternativ);
             ak.setBeschreibung(Beschreibung);
             AktivityNr= (Integer) s.save(ak);
             tc.commit();
@@ -328,6 +348,50 @@ public class DatabaseManager {
         SQLQuery query = s.createSQLQuery("Select Reisenr from Urlaubsprofile where Profilnr = (Select Profilnr from Urlaubsprofile where name = '"+name+"');");
         return Integer.parseInt(query.getSingleResult().toString());
     }
+    public List<Object[]> showAlleUser(){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select usernr,geburtsdat,vorname,nachname,rolle from User");
+        List<Object[]> a = query.list();
+        /*for(Object[] rr : a){
+            for(int i=0;i<5;i++)
+                System.out.println(rr[i]+"###########################");
+            System.out.println();
+        }*/
+        return a;
+    }
+    public List<Object[]> showAllUserID(){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select Usernr from User ORDER BY usernr;");
+        return query.list();
+    }
+    public void SetRolleByUserId(int id, int rolle){
+        Session s = sf.openSession();
+        Transaction tc = null;
+        try{
+            tc = s.beginTransaction();
+            User us = getUserbyId(id);
+            us.setRolle(rolle);
+            s.saveOrUpdate(us);
+            tc.commit();
+        }
+        catch(HibernateException ex){
+            if(tc!= null) tc.rollback();
+            ex.printStackTrace();
+        }finally{
+            s.close();
+        }
+    }
+    public List<Object[]> getAllAktivtyId(){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select Anr from Aktivität ORDER BY Anr;");
+        return query.list();
+    }
+    public List<Object[]> getAllReiseId(){
+        Session s = sf.openSession();
+        SQLQuery query = s.createSQLQuery("Select ReiseNr from Reise ORDER BY ReiseNr;");
+        return query.list();
+    }
+
     //Unternhemen anhand von Parametern ausgeben
     //Reise anhand von Parametern ausgeben
     //User anhand von Parametern ausgeben

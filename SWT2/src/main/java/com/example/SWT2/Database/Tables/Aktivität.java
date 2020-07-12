@@ -15,15 +15,8 @@ public class Aktivität {
     @Type(type= "text")
     private String Beschreibung;
 
-    @ManyToOne
-    @JoinColumn(name="Alternativ", nullable=false)
-    private Aktivität Alternativ;
-
     public Integer getAnr(){return Anr;}
 
     public void setBeschreibung(String Beschreibung){this.Beschreibung = Beschreibung;}
     public String getBeschreibung(){return this.Beschreibung;}
-
-    public void setAlternativ(Aktivität Alternativ){this.Alternativ = Alternativ;}
-    public Aktivität getAlternativ(){return this.Alternativ;}
 }

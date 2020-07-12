@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import net.bytebuddy.matcher.ModifierMatcher.Mode;
 
 import java.util.ArrayList;
-import com.example.SWT2.Database.Tables.User;
+import com.example.SWT2.Database.Tables.*;
 import com.example.SWT2.Database.DatabaseManager;
 import javax.servlet.http.HttpSession;
 import com.*;
@@ -27,7 +27,14 @@ public class HomeController {
                 User user = (User) session.getAttribute("user");
                     if(db.userAdmin(user) == true){         //Der User ist Admin
                         model.addAttribute("user", user);
-                        model.addAttribute("reise", 0);
+                        model.addAttribute("users", db.showAlleUser());
+                        model.addAttribute("userid", db.showAllUserID());
+                        model.addAttribute("Suchanfrage4", new Suchanfrage());
+                        model.addAttribute("reisse", new Reise());
+                        model.addAttribute("aktiv", new Aktivität());
+                        model.addAttribute("Suchanfrage5", new Suchanfrage());
+                        model.addAttribute("Anr", db.getAllAktivtyId());
+                        model.addAttribute("Reisenr", db.getAllReiseId());
                         return "home";
                     }
                     else{                          //Normaler User Login erfolgreich
@@ -65,7 +72,14 @@ public class HomeController {
                 user.setRolle(1);
                 session.setAttribute("user", user);
                 model.addAttribute("user", user);
-                model.addAttribute("reise",0);
+                model.addAttribute("users", db.showAlleUser());
+                model.addAttribute("userid", db.showAllUserID());
+                model.addAttribute("Suchanfrage4", new Suchanfrage());
+                model.addAttribute("reisse", new Reise());
+                model.addAttribute("aktiv", new Aktivität());
+                model.addAttribute("Suchanfrage5", new Suchanfrage());
+                model.addAttribute("Anr", db.getAllAktivtyId());
+                model.addAttribute("Reisenr", db.getAllReiseId());
                 return "home";
             }
             else{

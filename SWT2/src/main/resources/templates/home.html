@@ -53,8 +53,90 @@
                         <div th:case="1">
                             <h1 th:text="'Hallo Admin '+${user.vorname}"></h1>
                             <div>
-                                Das sind die Optionen die ein Admin hat.
-                                Noch zu machen.
+                                <h2 th:if="${#lists.isEmpty(users)}">Es sind keine User registriert</h2>
+                                <div th:if="${not #lists.isEmpty(users)}">
+                                    <h2>User</h2>
+                                    <table>
+                                        <thead>
+                                            <th>UserNr</th>
+                                            <th>Geburtsdatum</th>
+                                            <th>Vorname</th>
+                                            <th>Nachname</th>
+                                            <th>Rolle</th>
+                                        </thead>
+                                        <thboy>
+                                            <tr th:each="us : ${users}">
+                                                <td th:text="${us[0]}"></td>
+                                                <td th:text="${us[1]}"></td>
+                                                <td th:text="${us[2]}"></td>
+                                                <td th:text="${us[3]}"></td>
+                                                <td th:text="${us[4]}"></td>
+                                            </tr>
+                                        </thboy>
+                                    </table>
+                                    <form action="#" th:action="@{/UserÄndern}" th:object="${Suchanfrage4}" method="POST">
+                                    Usernr: <select th:field="*{option}">
+                                                <option th:each="i: ${userid}" th:value="${i}" th:text="${i}"></option>
+                                            </select>
+                                            <select th:field="*{suche}">
+                                                <option th:value="0">0</option>
+                                                <option th:value="1">1</option>
+                                            </select>
+                                            <button type="submit">Ändern</button>
+                                    </form>
+                                </div>    
+                            </div>
+                            <div>
+                                <h2>Reise erstellen:</h2>
+                                <form th:action="@{/ReiseHinzu}" th:object="${reisse}" method="post">
+                                    <div>
+                                        <label>Beschreibung</label>
+                                        <input type="text" maxlength="20" size="20" th:field="*{Beschreibung}">
+                                    </div>
+                                    <div>
+                                        <label>Ort</label>
+                                        <input type="text" maxlength="20" size="20" th:field="*{Ort}">
+                                    </div>
+                                    <div>    
+                                        <label>Region</label>
+                                        <input type="text" maxlength="20" size="20" th:field="*{Region}">
+                                    </div>
+                                    <div>
+                                        <label>Land</label>
+                                        <input type="text" maxlength="20" size="20" th:field="*{Land}">
+                                    </div>
+                                    <div>
+                                        <label>Preis</label>
+                                        <input type="number" th:field="*{Preis}">
+                                    </div>
+                                    <div>
+                                        <label>Jahreszeit</label>
+                                        <input type="text" maxlength="20" size="20" th:field="*{Jahreszeit}">
+                                    </div>
+                                    <button type="submit">Erstellen</button>
+                                </form>
+                            </div>
+                            <div>
+                                <h2>Aktivät erstellen</h2>
+                                <form th:action="@{AktivtätErstellen}" th:object="${aktiv}" method="post">
+                                    <div>
+                                        <label>Beschreibung</label>
+                                        <input type="text" th:field="*{Beschreibung}">
+                                    </div>
+                                    <button type="submit">Erstellen</button>
+                                </form>
+                            </div>
+                            <div>
+                                <h2>Aktiviät zu Reise hinzufügen</h2>
+                                <form th:action="@{AktivtätZuReiseHinzu}" th:object="${Suchanfrage5}" method="post">
+                                    ReiseNr: <select th:field="*{option}">
+                                        <option th:each="i: ${Reisenr}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                    AktivitätenNr: <select th:field="*{suche}">
+                                        <option th:each="i: ${Anr}" th:value="${i}" th:text="${i}"></option>
+                                    </select>
+                                     <button type="submit">Erstellen</button>
+                                </form>
                             </div>
                         </div>
                         <div th:case="*">
@@ -122,34 +204,34 @@
                                 </div>
                                 <button type="submit">Suchen</button>
                             </form>
+                            <form action="#" th:action="@{/ErstellProfil}" th:object="${Suchanfrage2}" method="POST">
+                                ReiseNr: <select th:field="*{option}">
+                                            <option th:each="i : ${GebuReis}" th:value="${i}" th:text="${i}"></option>
+                                        </select>
+                                        <div>
+                                            ProfilName: <input type="text" th:field="*{suche}">
+                                        </div>
+                                </select>
+                                <button type="submit">Reiseprofil erstellen</button>
+                            </form>
+                            <div  th:if="${#lists.isEmpty(Profilnamen)}">
+        
+                            </div>
+                            <div th:if="${not #lists.isEmpty(Profilnamen)}">
+                                <form action="#" th:action="@{/ReiseBuchenMitProfil}" th:object="${Suchanfrage3}"method="POST">
+                                    <select th:field="*{option}">
+                                        <option th:each="i : ${Profilnamen}" th:value="${i}" th:text="${i}"></option>
+                                        <input type="date" th:field="*{von}">
+                                        <input type="date" th:field="*{bis}">
+                                    </select>
+                                    <button type="submit">Reise buchen mit Vorlage</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <form action="#" th:action="@{/logout}" method="POST">
                         <button type="submit">Logout</button>
                     </form>
-                    <form action="#" th:action="@{/ErstellProfil}" th:object="${Suchanfrage2}" method="POST">
-                        ReiseNr: <select th:field="*{option}">
-                                    <option th:each="i : ${GebuReis}" th:value="${i}" th:text="${i}"></option>
-                                </select>
-                                <div>
-                                    ProfilName: <input type="text" th:field="*{suche}">
-                                </div>
-                        </select>
-                        <button type="submit">Reiseprofil erstellen</button>
-                    </form>
-                    <div  th:if="${#lists.isEmpty(Profilnamen)}">
-
-                    </div>
-                    <div th:if="${not #lists.isEmpty(Profilnamen)}">
-                        <form action="#" th:action="@{/ReiseBuchenMitProfil}" th:object="${Suchanfrage3}"method="POST">
-                            <select th:field="*{option}">
-                                <option th:each="i : ${Profilnamen}" th:value="${i}" th:text="${i}"></option>
-                                <input type="date" th:field="*{von}">
-                                <input type="date" th:field="*{bis}">
-                            </select>
-                            <button type="submit">Reise buchen mit Vorlage</button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </main>    
